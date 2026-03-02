@@ -1,41 +1,39 @@
-import { create } from 'zustand'
 import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
+  isNode,
   MarkerType,
   type Connection,
   type Edge,
   type EdgeChange,
-  type Node,
   type NodeChange,
-} from 'reactflow'
-
-// Custom Node Data Type
-export interface PipelineNodeData {
-  [key: string]: unknown
-}
-
+} from '@xyflow/react'
+import { create } from 'zustand'
+import type { PipelineNode } from '../nodes'
 // Store Type
 interface PipelineState {
-  nodes: Node<PipelineNodeData>[]
+  nodes: PipelineNode[]
   edges: Edge[]
   nodeIDs: Record<string, number>
 
-  getNodeID: (type: string) => string
-  addNode: (node: Node<PipelineNodeData>) => void
+  getNodeID: (type: PipelineNode['type']) => string
+  addNode: (node: PipelineNode) => void
 
   onNodesChange: (changes: NodeChange[]) => void
   onEdgesChange: (changes: EdgeChange[]) => void
   onConnect: (connection: Connection) => void
 
-  updateNodeField: (nodeId: string, field: string, value: any) => void
+  updateNodeField: <
+    T extends PipelineNode['type'],
+    K extends keyof Extract<PipelineNode, { type: T }>['data']
+  >(
+    nodeId: string,
+    field: K,
+    value: Extract<PipelineNode, { type: T }>['data'][K]
+  ) => void
 
-  getPipelineData: () => {
-    nodes: Node<PipelineNodeData>[]
-    edges: Edge[]
-  }
-
+  getPipelineData: () => { nodes: PipelineNode[]; edges: Edge[] }
   clearPipeline: () => void
 }
 
@@ -56,13 +54,13 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
   },
 
   addNode: (node) =>
-    set({
-      nodes: [...get().nodes, node],
-    }),
+    set((state) => ({
+      nodes: [...state.nodes, node],
+    })),
 
   onNodesChange: (changes) =>
     set({
-      nodes: applyNodeChanges(changes, get().nodes),
+      nodes: applyNodeChanges(changes, get().nodes).filter(isNode) as PipelineNode[],
     }),
 
   onEdgesChange: (changes) =>
@@ -71,49 +69,43 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
     }),
 
   onConnect: (connection) =>
-    set({
+    set((state) => ({
       edges: addEdge(
         {
           ...connection,
           type: 'smoothstep',
           animated: true,
-          markerEnd: {
-            type: MarkerType.ArrowClosed,
-            width: 18,
-            height: 18,
-          },
-          style: {
-            stroke: 'rgba(255,255,255,0.12)',
-            strokeWidth: 1.5,
-          },
+          markerEnd: { type: MarkerType.ArrowClosed, width: 18, height: 18 },
+          style: { stroke: 'rgba(255,255,255,0.12)', strokeWidth: 1.5 },
         },
-        get().edges
+        state.edges
       ),
-    }),
+    })),
 
-  updateNodeField: (nodeId, field, value) =>
-    set({
-      nodes: get().nodes.map((n) =>
-        n.id === nodeId
-          ? {
-            ...n,
-            data: {
-              ...n.data,
-              [field]: value,
-            },
-          }
-          : n
-      ),
-    }),
+  updateNodeField: <T extends PipelineNode['type'], K extends keyof Extract<PipelineNode, { type: T }>['data']>(
+    nodeId: string,
+    field: K,
+    value: Extract<PipelineNode, { type: T }>['data'][K]
+  ) =>
+    set((state) => ({
+      nodes: state.nodes.map((n) => {
+        if (n.id !== nodeId) return n
 
-  getPipelineData: () => ({
-    nodes: get().nodes,
-    edges: get().edges,
-  }),
+        // Narrow node type
+        const typedNode = n as Extract<PipelineNode, { type: T }>
+
+        return {
+          ...typedNode,
+          data: {
+            ...typedNode.data,
+            [field]: value,
+          },
+        }
+      }),
+    })),
+
+  getPipelineData: () => ({ nodes: get().nodes, edges: get().edges }),
 
   clearPipeline: () =>
-    set({
-      nodes: [],
-      edges: [],
-    }),
+    set({ nodes: [], edges: [] }),
 }))

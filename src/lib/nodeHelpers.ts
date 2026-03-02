@@ -9,15 +9,3 @@ export const distributeHandles = (count: number): string[] => {
   );
 };
 
-export interface NodeData {
-  id: string;
-  nodeType: string;
-}
-
-// Initial data shape when a node is dropped onto the canvas
-export const makeNodeData = (
-  id: string,
-  nodeType: string
-): NodeData => {
-  return { id, nodeType };
-};

@@ -1,5 +1,5 @@
+import { Handle, type Node, type NodeProps, Position } from '@xyflow/react';
 import { useCallback, useState, } from 'react';
-import { Handle, type NodeProps, Position } from 'reactflow';
 
 // hooks
 import { useAutoResize } from '../../hooks/useAutoResize';
@@ -11,7 +11,9 @@ type TextNodeData = {
   text?: string;
 };
 
-export default function TextNode({ id, data }: NodeProps<TextNodeData>) {
+export type TextNode = Node<TextNodeData, 'text'>;
+
+export default function TextNode({ id, data }: NodeProps<TextNode>) {
   const [text, setText] = useState<string>(data?.text ?? '{{input}}');
 
   // Extract unique variables
@@ -28,6 +30,7 @@ export default function TextNode({ id, data }: NodeProps<TextNodeData>) {
 
   return (
     <div
+      id={id}
       className="base-node"
       style={
         {

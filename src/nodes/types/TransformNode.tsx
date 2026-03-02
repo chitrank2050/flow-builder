@@ -1,15 +1,15 @@
+import type { Node, NodeProps } from '@xyflow/react';
 import { useState } from 'react';
 import { BaseNode } from '../base/BaseNode';
 
-type Props = {
-  id: string;
-  data?: {
-    fn?: string;
-    lang?: string;
-  };
+type TransformNodeData = {
+  fn?: string;
+  lang?: string;
 }
 
-export default function TransformNode({ id, data }: Props) {
+export type TransformNode = Node<TransformNodeData, 'transform'>
+
+export default function TransformNode({ id, data }: NodeProps<TransformNode>) {
   const [fn, setFn] = useState(data?.fn || 'data => data');
   const [lang, setLang] = useState(data?.lang || 'JavaScript');
 

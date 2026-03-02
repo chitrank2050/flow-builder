@@ -1,16 +1,15 @@
+import type { Node, NodeProps } from '@xyflow/react';
 import { useState } from 'react';
 import { BaseNode } from '../base/BaseNode';
 
-type Props = {
-  id: string;
-  data?: {
-    model?: string;
-    temperature?: string;
-  };
+type LLMNodeData = {
+  model?: string;
+  temperature?: string;
 }
 
+export type LLMNode = Node<LLMNodeData, 'llm'>
 
-export default function LLMNode({ id, data }: Props) {
+export default function LLMNode({ id, data }: NodeProps<LLMNode>) {
   const [model, setModel] = useState(data?.model || 'gpt-4o');
   const [temperature, setTemperature] = useState(data?.temperature || '0.7');
 

@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
-import ReactFlow, {
+import {
+  ReactFlow,
   Background,
   BackgroundVariant,
   ConnectionLineType,
@@ -8,12 +9,13 @@ import ReactFlow, {
   type Node,
   type ReactFlowInstance,
   type XYPosition,
-} from 'reactflow'
+} from '@xyflow/react'
 import { useShallow } from 'zustand/shallow'
+
 import { nodeTypes } from '../nodes'
 import { usePipelineStore } from '../store/pipelineStore'
 
-import 'reactflow/dist/style.css'
+import '@xyflow/react/dist/style.css';
 
 /* ========================= */
 
@@ -57,7 +59,7 @@ export default function PipelineCanvas() {
 
       const bounds = wrapperRef.current.getBoundingClientRect()
 
-      const position: XYPosition = rfInstance.project({
+      const position: XYPosition = rfInstance.screenToFlowPosition({
         x: e.clientX - bounds.left,
         y: e.clientY - bounds.top,
       })

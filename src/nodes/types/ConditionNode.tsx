@@ -1,15 +1,15 @@
+import type { Node, NodeProps } from '@xyflow/react';
 import { useState } from 'react';
 import { BaseNode } from '../base/BaseNode';
 
-type ConditionNode = {
-  id: string;
-  data?: {
-    condition?: string;
-    operator?: string;
-  };
+type ConditionNodeData = {
+  condition?: string;
+  operator?: string;
 }
 
-export default function ConditionNode({ id, data }: ConditionNode) {
+export type ConditionNode = Node<ConditionNodeData, 'condition'>
+
+export default function ConditionNode({ id, data }: NodeProps<ConditionNode>) {
   const [condition, setCondition] = useState(data?.condition || 'value > 0');
   const [operator, setOperator] = useState(data?.operator || 'JS Expression');
 
