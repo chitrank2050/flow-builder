@@ -1,4 +1,3 @@
-// nodes/types/ApiNode.jsx
 import { useState } from 'react';
 import { BaseNode } from '../base/BaseNode';
 

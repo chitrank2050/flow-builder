@@ -1,4 +1,3 @@
-// nodes/types/InputNode.jsx
 import { useState } from 'react';
 import { BaseNode } from '../base/BaseNode';
 

@@ -1,4 +1,3 @@
-// nodes/index.js
 import ApiNode from './types/ApiNode';
 import ConditionNode from './types/ConditionNode';
 import FilterNode from './types/FilterNode';

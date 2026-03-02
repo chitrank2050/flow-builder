@@ -1,6 +1,3 @@
-// nodes/types/NoteNode.jsx
-// Intentionally simple — demonstrates BaseNode isn't always necessary,
-// but for ultra-custom cases you can render directly.
 import { useState } from 'react';
 import { BaseNode } from '../base/BaseNode';
 

@@ -1,17 +1,17 @@
-import { useState, useRef, useCallback } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import ReactFlow, {
-  Controls,
   Background,
-  MiniMap,
   BackgroundVariant,
-  type ReactFlowInstance,
-  type Node,
-  type XYPosition,
   ConnectionLineType,
+  Controls,
+  MiniMap,
+  type Node,
+  type ReactFlowInstance,
+  type XYPosition,
 } from 'reactflow'
 import { useShallow } from 'zustand/shallow'
-import { usePipelineStore } from '../store/pipelineStore'
 import { nodeTypes } from '../nodes'
+import { usePipelineStore } from '../store/pipelineStore'
 
 import 'reactflow/dist/style.css'
 

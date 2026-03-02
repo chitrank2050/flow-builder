@@ -1,5 +1,3 @@
-// nodes/types/TextNode.tsx
-
 import { useCallback, useState, } from 'react';
 import { Handle, type NodeProps, Position } from 'reactflow';
 
@@ -12,8 +10,6 @@ const ACCENT = '#3B82F6';
 type TextNodeData = {
   text?: string;
 };
-
-// ─────────────────────────────────────────────────────────────────
 
 export default function TextNode({ id, data }: NodeProps<TextNodeData>) {
   const [text, setText] = useState<string>(data?.text ?? '{{input}}');

@@ -1,7 +1,5 @@
-// nodes/types/OutputNode.jsx
 import { useState } from 'react';
 import { BaseNode } from '../base/BaseNode';
-
 
 type Props = {
   id: string;
@@ -10,7 +8,6 @@ type Props = {
     outputType?: string;
   };
 }
-
 
 export default function OutputNode({ id, data }: Props) {
   const [name, setName] = useState(data?.outputName || id.replace('customOutput-', 'output_'));

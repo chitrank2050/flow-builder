@@ -1,4 +1,3 @@
-// nodes/types/LLMNode.jsx
 import { useState } from 'react';
 import { BaseNode } from '../base/BaseNode';
 

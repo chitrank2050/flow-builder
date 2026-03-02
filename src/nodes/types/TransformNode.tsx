@@ -1,6 +1,4 @@
-// nodes/types/TransformNode.jsx
 import { useState } from 'react';
-
 import { BaseNode } from '../base/BaseNode';
 
 type Props = {
@@ -10,7 +8,6 @@ type Props = {
     lang?: string;
   };
 }
-
 
 export default function TransformNode({ id, data }: Props) {
   const [fn, setFn] = useState(data?.fn || 'data => data');
