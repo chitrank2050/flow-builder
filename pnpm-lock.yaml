@@ -17,6 +17,9 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.4(react@19.2.4)
+      vite-plugin-adsense:
+        specifier: ^1.2.0
+        version: 1.2.0
       zustand:
         specifier: ^5.0.11
         version: 5.0.11(@types/react@19.2.14)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))
@@ -1112,6 +1115,9 @@ packages:
     resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  vite-plugin-adsense@1.2.0:
+    resolution: {integrity: sha512-PLL3IZosrB9k+s5RRdv5l7AtkNPXFZTfh4LibTCFmV6WLp116o1ZoRBb2orLRjhENhKH3cP1doV1/7RyPtnY8A==}
 
   vite-plugin-radar@0.10.1:
     resolution: {integrity: sha512-a1PEDWgbuh7Wms8d/KHY5v7YM2w/mw2ShnlZSiIeAqr+sRQJf6POZE5Vg4eTXhoaWhKH89rl1llznHGNX9CMMQ==}
@@ -2224,6 +2230,8 @@ snapshots:
   use-sync-external-store@1.6.0(react@19.2.4):
     dependencies:
       react: 19.2.4
+
+  vite-plugin-adsense@1.2.0: {}
 
   vite-plugin-radar@0.10.1(vite@7.3.1(@types/node@25.3.3)):
     dependencies:
