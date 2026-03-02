@@ -1,0 +1,477 @@
+/* @import "tailwindcss"; */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+/* ─── Design Tokens ──────────────────────────────────── */
+:root {
+  --bg-app:          #06080F;
+  --bg-canvas:       #080B14;
+  --bg-node:         #0D1220;
+  --bg-node-hover:   #111827;
+  --bg-field:        #07090F;
+  --border-subtle:   rgba(255,255,255,0.055);
+  --border-node:     rgba(255,255,255,0.09);
+  --border-focus:    rgba(255,255,255,0.18);
+  --text-primary:    #E2E8F0;
+  --text-secondary:  #94A3B8;
+  --text-muted:      #475569;
+  --text-dim:        #2A3547;
+
+  --blue:    #3B82F6;
+  --cyan:    #06B6D4;
+  --purple:  #8B5CF6;
+  --green:   #10B981;
+  --orange:  #F59E0B;
+  --pink:    #EC4899;
+  --red:     #EF4444;
+  --yellow:  #EAB308;
+  --slate:   #64748B;
+
+  --shadow-sm:   0 2px 12px rgba(0,0,0,0.4);
+  --shadow-node: 0 4px 28px rgba(0,0,0,0.55);
+  --shadow-lg:   0 8px 48px rgba(0,0,0,0.7);
+}
+
+/* ─── Reset ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-app);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Node Card ──────────────────────────────────────── */
+.base-node {
+  background: var(--bg-node);
+  border: 1px solid var(--border-node);
+  border-radius: 10px;
+  box-shadow: var(--shadow-node);
+  position: relative;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 220px;
+}
+
+.base-node:hover {
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-lg), 0 0 0 1px color-mix(in srgb, var(--accent, var(--blue)) 25%, transparent);
+}
+
+.selected .base-node {
+  border-color: color-mix(in srgb, var(--accent, var(--blue)) 60%, transparent);
+  box-shadow: var(--shadow-lg), 0 0 0 1px color-mix(in srgb, var(--accent, var(--blue)) 40%, transparent);
+}
+
+/* Accent bar */
+.node-accent-bar {
+  height: 3px;
+  border-radius: 10px 10px 0 0;
+  background: var(--accent, var(--blue));
+}
+
+/* Header */
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px 9px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.node-icon {
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.75;
+}
+
+.node-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.node-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--accent, var(--blue)) 15%, transparent);
+  color: color-mix(in srgb, var(--accent, var(--blue)) 80%, white);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Fields */
+.node-fields {
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.node-field { display: flex; flex-direction: column; gap: 4px; }
+
+.field-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.field-input,
+.field-select,
+.field-textarea {
+  background: var(--bg-field);
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  padding: 5px 8px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  -webkit-appearance: none;
+}
+
+.field-input::placeholder { color: var(--text-dim); }
+
+.field-input:focus,
+.field-select:focus,
+.field-textarea:focus {
+  border-color: color-mix(in srgb, var(--accent, var(--blue)) 60%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent, var(--blue)) 12%, transparent);
+}
+
+.field-textarea {
+  resize: none;
+  line-height: 1.55;
+  font-size: 12px;
+  min-width: 180px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, width 0.1s ease, height 0.1s ease;
+}
+
+.field-select option { background: #111827; color: var(--text-primary); }
+
+/* Node info text */
+.node-info {
+  padding: 6px 14px 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ─── Handles ────────────────────────────────────────── */
+.react-flow__handle {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  border: 2px solid var(--bg-node) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  z-index: 10 !important;
+}
+
+.react-flow__handle-left  { background: var(--cyan) !important;  left: -5px !important;  }
+.react-flow__handle-right { background: var(--green) !important; right: -5px !important; }
+
+.react-flow__handle:hover {
+  transform: scale(1.5) !important;
+  box-shadow: 0 0 8px currentColor !important;
+}
+
+.handle-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  color: var(--text-muted);
+  position: absolute;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.04em;
+}
+.handle-label-left  { left: 12px; }
+.handle-label-right { right: 12px; }
+
+/* ─── Toolbar ────────────────────────────────────────── */
+.toolbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  background: rgba(6, 8, 15, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 6px;
+  z-index: 200;
+}
+
+.toolbar-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.toolbar-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border-subtle);
+  margin: 0 8px;
+  flex-shrink: 0;
+}
+
+.toolbar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.toolbar-nodes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toolbar-nodes::-webkit-scrollbar { display: none; }
+
+.draggable-node {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: grab;
+  transition: all 0.15s ease;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.draggable-node:hover {
+  background: rgba(255,255,255,0.045);
+  color: var(--text-primary);
+  border-color: var(--border-node);
+}
+
+.draggable-node:active { cursor: grabbing; }
+
+.node-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── Canvas ─────────────────────────────────────────── */
+.canvas-wrapper {
+  position: fixed;
+  top: 60px;
+  bottom: 56px;
+  left: 0;
+  right: 0;
+}
+
+/* ─── Submit Bar ─────────────────────────────────────── */
+.submit-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  background: rgba(6, 8, 15, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 200;
+}
+
+.status-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-right: 8px;
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  background: rgba(59, 130, 246, 0.08);
+  color: #93C5FD;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: rgba(59, 130, 246, 0.16);
+  border-color: rgba(59, 130, 246, 0.6);
+  color: #BFDBFE;
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.18);
+}
+
+.submit-btn:active { transform: scale(0.98); }
+
+.submit-btn.loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.submit-result {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+}
+
+.submit-result.success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.submit-result.error {
+  background: rgba(239, 68, 68, 0.12);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+/* ─── ReactFlow Overrides ────────────────────────────── */
+.react-flow__background { background: var(--bg-canvas); }
+
+.react-flow__controls {
+  background: var(--bg-node) !important;
+  border: 1px solid var(--border-node) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  fill: var(--text-muted) !important;
+}
+
+.react-flow__controls-button:hover {
+  background: var(--bg-node-hover) !important;
+  fill: var(--text-primary) !important;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none !important;
+}
+
+.react-flow__minimap {
+  background: var(--bg-node) !important;
+  border: 1px solid var(--border-node) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.react-flow__minimap-mask { fill: rgba(6, 8, 15, 0.6) !important; }
+.react-flow__minimap-node { fill: rgba(255,255,255,0.08) !important; }
+
+.react-flow__edge-path {
+  stroke: rgba(255,255,255,0.12) !important;
+  stroke-width: 1.5 !important;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: rgba(59, 130, 246, 0.55) !important;
+}
+
+.react-flow__edge-textwrapper { display: none; }
+
+.react-flow__connection-path {
+  stroke: var(--blue) !important;
+  stroke-width: 1.5 !important;
+  opacity: 0.6;
+}
+
+/* node selection box */
+.react-flow__nodesselection-rect,
+.react-flow__selection {
+  background: rgba(59, 130, 246, 0.04) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+/* ─── Note Node special ──────────────────────────────── */
+.note-node {
+  background: rgba(234, 179, 8, 0.04);
+  border: 1px solid rgba(234, 179, 8, 0.15);
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 180px;
+  max-width: 280px;
+}
+
+.note-textarea {
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  width: 100%;
+  min-height: 60px;
+}
