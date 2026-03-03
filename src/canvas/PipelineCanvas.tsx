@@ -7,7 +7,6 @@ import {
   ReactFlow,
   type ReactFlowInstance,
   type XYPosition,
-  type Node,
 } from '@xyflow/react'
 import { useCallback, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'

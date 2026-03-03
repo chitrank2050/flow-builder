@@ -1,6 +1,7 @@
 import { Handle, Position } from '@xyflow/react';
 import type { CSSProperties, ReactNode } from 'react';
 import NodeField, { type BaseField } from './NodeField';
+import NodeWithToolbar from '../../components/NodeToolbar';
 
 // Handle types
 interface NodeHandle {
@@ -41,6 +42,7 @@ export const BaseNode = ({
 
   return (
     <div
+      key={id}
       className="base-node"
       style={{ '--accent': accentColor, ...style } as CSSProperties}
     >
@@ -97,6 +99,8 @@ export const BaseNode = ({
           />
         )
       })}
+
+      <NodeWithToolbar isVisible />
     </div>
   )
 }

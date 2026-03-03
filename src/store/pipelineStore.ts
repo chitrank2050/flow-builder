@@ -19,6 +19,7 @@ interface PipelineState {
 
   getNodeID: (type: PipelineNode['type']) => string
   addNode: (node: PipelineNode) => void
+  deleteNode: (id: string) => void
 
   onNodesChange: (changes: NodeChange[]) => void
   onEdgesChange: (changes: EdgeChange[]) => void
@@ -56,6 +57,14 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
   addNode: (node) =>
     set((state) => ({
       nodes: [...state.nodes, node],
+    })),
+
+  deleteNode: (nodeId: string) =>
+    set((state) => ({
+      nodes: state.nodes.filter((n) => n.id !== nodeId),
+      edges: state.edges.filter(
+        (e) => e.source !== nodeId && e.target !== nodeId
+      ),
     })),
 
   onNodesChange: (changes) =>
