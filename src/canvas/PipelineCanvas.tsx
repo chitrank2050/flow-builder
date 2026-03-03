@@ -6,13 +6,13 @@ import {
   ConnectionLineType,
   Controls,
   MiniMap,
-  type Node,
   type ReactFlowInstance,
   type XYPosition,
+  MarkerType,
 } from '@xyflow/react'
 import { useShallow } from 'zustand/shallow'
 
-import { nodeTypes } from '../nodes'
+import { nodeTypes, type PipelineNode } from '../nodes'
 import { usePipelineStore } from '../store/pipelineStore'
 
 import '@xyflow/react/dist/style.css';
@@ -53,7 +53,7 @@ export default function PipelineCanvas() {
       const raw = e.dataTransfer.getData('application/reactflow')
       if (!raw) return
 
-      const { nodeType } = JSON.parse(raw) as { nodeType?: string }
+      const { nodeType } = JSON.parse(raw) as { nodeType?: PipelineNode['type'] }
 
       if (!nodeType) return
 
@@ -71,7 +71,7 @@ export default function PipelineCanvas() {
         type: nodeType,
         position,
         data: { id, nodeType },
-      } as Node)
+      } as PipelineNode)
     },
     [rfInstance, store]
   )
@@ -101,14 +101,25 @@ export default function PipelineCanvas() {
         snapToGrid
         connectionLineType={ConnectionLineType.SmoothStep}
         defaultEdgeOptions={{
-          type: 'smoothstep',
-          animated: true,
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            width: 18,
+            height: 18,
+          },
           style: {
             stroke: 'rgba(255,255,255,0.12)',
             strokeWidth: 1.5,
           },
+          labelStyle: {
+            fill: 'rgba(255,255,255,0.8)',
+            fontWeight: 500,
+            fontSize: 12,
+          },
         }}
         fitView
+        fitViewOptions={{
+          padding: 0.2,
+        }}
       >
         <Background
           variant={BackgroundVariant.Dots}

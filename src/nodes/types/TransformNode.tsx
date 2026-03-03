@@ -7,7 +7,7 @@ type TransformNodeData = {
   lang?: string;
 }
 
-export type TransformNode = Node<TransformNodeData, 'transform'>
+export type TransformNode = Node<TransformNodeData, 'transformNode'>
 
 export default function TransformNode({ id, data }: NodeProps<TransformNode>) {
   const [fn, setFn] = useState(data?.fn || 'data => data');

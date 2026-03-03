@@ -7,7 +7,7 @@ type LLMNodeData = {
   temperature?: string;
 }
 
-export type LLMNode = Node<LLMNodeData, 'llm'>
+export type LLMNode = Node<LLMNodeData, 'llmNode'>
 
 export default function LLMNode({ id, data }: NodeProps<LLMNode>) {
   const [model, setModel] = useState(data?.model || 'gpt-4o');

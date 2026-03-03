@@ -6,7 +6,7 @@ type NoteNodeData = {
   text?: string;
 }
 
-export type NoteNode = Node<NoteNodeData, 'note'>
+export type NoteNode = Node<NoteNodeData, 'noteNode'>
 
 export default function NoteNode({ id, data }: NodeProps<NoteNode>) {
   const [text, setText] = useState(data?.text || 'Add a note...');

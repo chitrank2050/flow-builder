@@ -8,7 +8,7 @@ type ApiNodeData = {
   auth?: string
 }
 
-export type ApiNode = Node<ApiNodeData, 'api'>
+export type ApiNode = Node<ApiNodeData, 'apiNode'>
 
 export default function ApiNode({ id, data }: NodeProps<ApiNode>) {
   const [url, setUrl] = useState(data?.url || '');

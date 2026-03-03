@@ -7,7 +7,7 @@ type ConditionNodeData = {
   operator?: string;
 }
 
-export type ConditionNode = Node<ConditionNodeData, 'condition'>
+export type ConditionNode = Node<ConditionNodeData, 'conditionNode'>
 
 export default function ConditionNode({ id, data }: NodeProps<ConditionNode>) {
   const [condition, setCondition] = useState(data?.condition || 'value > 0');

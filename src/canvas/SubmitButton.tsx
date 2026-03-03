@@ -17,6 +17,7 @@ export default function SubmitButton() {
 
     try {
       const { nodes, edges } = getPipelineData();
+
       const res = await fetch(`${API_BASE}/pipelines/parse`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

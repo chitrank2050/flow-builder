@@ -7,7 +7,7 @@ type OutputNodeData = {
   outputType?: string;
 }
 
-export type OutputNode = Node<OutputNodeData, 'output'>
+export type OutputNode = Node<OutputNodeData, 'outputNode'>
 
 export default function OutputNode({ id, data }: NodeProps<OutputNode>) {
   const [name, setName] = useState(data?.outputName || id.replace('customOutput-', 'output_'));

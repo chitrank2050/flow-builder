@@ -3,7 +3,6 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
   isNode,
-  MarkerType,
   type Connection,
   type Edge,
   type EdgeChange,
@@ -68,19 +67,20 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
       edges: applyEdgeChanges(changes, get().edges),
     }),
 
-  onConnect: (connection) =>
+  onConnect: (connection) => {
     set((state) => ({
       edges: addEdge(
         {
           ...connection,
-          type: 'smoothstep',
-          animated: true,
-          markerEnd: { type: MarkerType.ArrowClosed, width: 18, height: 18 },
-          style: { stroke: 'rgba(255,255,255,0.12)', strokeWidth: 1.5 },
+          sourceHandle: connection.sourceHandle,
+          targetHandle: connection.targetHandle,
+          id: `edge-${connection.source}-${connection.sourceHandle}-${connection.target}-${connection.targetHandle}`,
+          label: `${connection.source} → ${connection.target}`,
         },
         state.edges
       ),
-    })),
+    }))
+  },
 
   updateNodeField: <T extends PipelineNode['type'], K extends keyof Extract<PipelineNode, { type: T }>['data']>(
     nodeId: string,

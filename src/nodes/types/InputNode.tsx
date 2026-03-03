@@ -7,7 +7,7 @@ type InputNodeData = {
   inputType?: string;
 }
 
-export type InputNode = Node<InputNodeData, 'input'>
+export type InputNode = Node<InputNodeData, 'inputNode'>
 
 export default function InputNode({ id, data }: NodeProps<InputNode>) {
   const [name, setName] = useState(data?.inputName || id.replace('customInput-', 'input_'));

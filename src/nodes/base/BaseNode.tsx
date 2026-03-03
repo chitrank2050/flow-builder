@@ -1,12 +1,18 @@
-import type { CSSProperties, ReactNode } from 'react';
 import { Handle, Position } from '@xyflow/react';
+import type { CSSProperties, ReactNode } from 'react';
 import NodeField, { type BaseField } from './NodeField';
 
 // Handle types
 interface NodeHandle {
   id: string
   label?: string
+  /**
+   * Optional CSS top value (e.g. '50%'). When omitted we auto-calc
+   * based on index and count.
+   */
   position?: string
+  /** Additional inline styles for the handle itself. */
+  style?: CSSProperties
 }
 
 // Component Props
@@ -71,45 +77,39 @@ export const BaseNode = ({
       {children && <div className="node-fields">{children}</div>}
 
       {/* Inputs */}
-      {inputs.map((input, i) => {
-        const top = resolveTop(inputs, i)
+      {inputs.map((input) => {
         return (
-          <div key={input.id}>
-            <Handle
-              type="target"
-              position={Position.Left}
-              id={`${id}-${input.id}`}
-              style={{ top }}
-            />
-            {input.label && (
-              <span className="handle-label handle-label-left" style={{ top }}>
-                {input.label}
-              </span>
-            )}
-          </div>
+          <Handle
+            key={input.id}
+            type="target"
+            position={Position.Left}
+            id={input.id}
+          // style={{ top, ...(input.style || {}) }}
+          />
         )
       })}
 
       {/* Outputs */}
       {outputs.map((output, i) => {
-        const top = resolveTop(outputs, i)
+        const top = output.position ?? resolveTop(outputs, i)
         return (
-          <div key={output.id}>
-            <Handle
-              type="source"
-              position={Position.Right}
-              id={`${id}-${output.id}`}
-              style={{ top }}
-            />
-            {output.label && (
-              <span
-                className="handle-label handle-label-right"
-                style={{ top }}
-              >
-                {output.label}
-              </span>
-            )}
-          </div>
+
+          <Handle
+            key={output.id}
+            type="source"
+            position={Position.Right}
+            id={output.id}
+          // style={{ top, ...(output.style || {}) }}
+          />
+
+          // <div key={output.id}>
+
+          //   {output.label && (
+          //     <span className="handle-label handle-label-right" style={{ top }}>
+          //       {output.label}
+          //     </span>
+          //   )}
+          // </div>
         )
       })}
     </div>

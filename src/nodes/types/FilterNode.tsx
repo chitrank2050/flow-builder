@@ -8,7 +8,7 @@ type FilterNodeData = {
   value?: string;
 }
 
-export type FilterNode = Node<FilterNodeData, 'filter'>
+export type FilterNode = Node<FilterNodeData, 'filterNode'>
 
 export default function FilterNode({ id, data }: NodeProps<FilterNode>) {
   const [field, setField] = useState(data?.field || '');
