@@ -1,13 +1,13 @@
-// canvas/SubmitButton.jsx
 import { useState } from 'react';
 import { usePipelineStore } from '../store/pipelineStore';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/v1';
+
 
 export default function SubmitButton() {
   const [status, setStatus] = useState<null | 'loading' | 'success' | 'error'>(null); // null | 'loading' | 'success' | 'error'
   const [result, setResult] = useState<null | { [key: string]: any }>(null);
-  const getPipelineData = usePipelineStore((s) => s.getPipelineData);
+
   const nodes = usePipelineStore((s) => s.nodes);
   const edges = usePipelineStore((s) => s.edges);
 
@@ -16,8 +16,7 @@ export default function SubmitButton() {
     setResult(null);
 
     try {
-      const { nodes, edges } = getPipelineData();
-
+      console.log({ nodes, edges })
       const res = await fetch(`${API_BASE}/pipelines/parse`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
