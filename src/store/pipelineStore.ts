@@ -2,7 +2,6 @@ import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
-  isNode,
   type Connection,
   type Edge,
   type EdgeChange,
@@ -16,24 +15,13 @@ interface PipelineState {
   nodes: PipelineNode[]
   edges: Edge[]
   nodeIDs: Record<string, number>
-
   getNodeID: (type: PipelineNode['type']) => string
   addNode: (node: PipelineNode) => void
   deleteNode: (id: string) => void
-
   onNodesChange: (changes: NodeChange[]) => void
   onEdgesChange: (changes: EdgeChange[]) => void
   onConnect: (connection: Connection) => void
-
-  updateNodeField: <
-    T extends PipelineNode['type'],
-    K extends keyof Extract<PipelineNode, { type: T }>['data']
-  >(
-    nodeId: string,
-    field: K,
-    value: Extract<PipelineNode, { type: T }>['data'][K]
-  ) => void
-
+  updateNodeField: (nodeId: string, field: string, value: unknown) => void
   getPipelineData: () => { nodes: PipelineNode[]; edges: Edge[] }
   clearPipeline: () => void
 }
@@ -45,75 +33,50 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
   nodeIDs: {},
 
   getNodeID: (type) => {
-    const ids = {
-      ...get().nodeIDs,
-      [type]: (get().nodeIDs[type] ?? 0) + 1,
-    }
-
-    set({ nodeIDs: ids })
-    return `${type}-${ids[type]}`
+    const count = (get().nodeIDs[type] ?? 0) + 1
+    set((state) => ({ nodeIDs: { ...state.nodeIDs, [type]: count } }))
+    return `${type}-${count}`
   },
 
   addNode: (node) =>
-    set((state) => ({
-      nodes: [...state.nodes, node],
-    })),
+    set((state) => ({ nodes: [...state.nodes, node] })),
 
-  deleteNode: (nodeId: string) =>
+  deleteNode: (nodeId) =>
     set((state) => ({
       nodes: state.nodes.filter((n) => n.id !== nodeId),
-      edges: state.edges.filter(
-        (e) => e.source !== nodeId && e.target !== nodeId
-      ),
+      edges: state.edges.filter((e) => e.source !== nodeId && e.target !== nodeId),
     })),
 
   onNodesChange: (changes) =>
-    set({
-      nodes: applyNodeChanges(changes, get().nodes).filter(isNode) as PipelineNode[],
-    }),
+    set((state) => ({
+      nodes: applyNodeChanges(changes, state.nodes) as PipelineNode[],
+    })),
 
   onEdgesChange: (changes) =>
-    set({
-      edges: applyEdgeChanges(changes, get().edges),
-    }),
-
-  onConnect: (connection) => set((state) => ({
-    edges: addEdge(
-      {
-        ...connection,
-        data: {
-          label: `${connection.source} → ${connection.target}`,
-        },
-        type: 'custom',
-      },
-      state.edges
-    ),
-  })),
-
-  updateNodeField: <T extends PipelineNode['type'], K extends keyof Extract<PipelineNode, { type: T }>['data']>(
-    nodeId: string,
-    field: K,
-    value: Extract<PipelineNode, { type: T }>['data'][K]
-  ) =>
     set((state) => ({
-      nodes: state.nodes.map((n) => {
-        if (n.id !== nodeId) return n
+      edges: applyEdgeChanges(changes, state.edges),
+    })),
 
-        // Narrow node type
-        const typedNode = n as Extract<PipelineNode, { type: T }>
+  onConnect: (connection) =>
+    set((state) => ({
+      edges: addEdge(
+        {
+          ...connection,
+          type: 'custom' as const,
+          data: { label: `${connection.source} → ${connection.target}` },
+        },
+        state.edges
+      ),
+    })),
 
-        return {
-          ...typedNode,
-          data: {
-            ...typedNode.data,
-            [field]: value,
-          },
-        }
-      }),
+  updateNodeField: (nodeId, field, value) =>
+    set((state) => ({
+      nodes: state.nodes.map((n) =>
+        n.id !== nodeId ? n : ({ ...n, data: { ...n.data, [field]: value } } as PipelineNode)
+      ),
     })),
 
   getPipelineData: () => ({ nodes: get().nodes, edges: get().edges }),
 
-  clearPipeline: () =>
-    set({ nodes: [], edges: [] }),
+  clearPipeline: () => set({ nodes: [], edges: [] }),
 }))

@@ -2,6 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 
+import reportWebVitals from './lib/reportAppVitals'
+
 import './index.css'
 
 const rootElement = document.getElementById('root')
@@ -15,3 +17,8 @@ createRoot(rootElement).render(
     <App />
   </StrictMode>
 )
+
+// only runs on `vite build`, never in dev
+if (import.meta.env.PROD) {
+  reportWebVitals()
+}

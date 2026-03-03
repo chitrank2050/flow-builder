@@ -1,38 +1,44 @@
-/* @import "tailwindcss"; */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+@import "tailwindcss";
 
 /* ─── Design Tokens ──────────────────────────────────── */
 :root {
-  --bg-app:          #06080F;
-  --bg-canvas:       #080B14;
-  --bg-node:         #0D1220;
-  --bg-node-hover:   #111827;
-  --bg-field:        #07090F;
-  --border-subtle:   rgba(255,255,255,0.055);
-  --border-node:     rgba(255,255,255,0.09);
-  --border-focus:    rgba(255,255,255,0.18);
-  --text-primary:    #E2E8F0;
-  --text-secondary:  #94A3B8;
-  --text-muted:      #475569;
-  --text-dim:        #2A3547;
+  --bg-app: #06080F;
+  --bg-canvas: #080B14;
+  --bg-node: #0D1220;
+  --bg-node-hover: #111827;
+  --bg-field: #07090F;
+  --border-subtle: rgba(255, 255, 255, 0.055);
+  --border-node: rgba(255, 255, 255, 0.09);
+  --border-focus: rgba(255, 255, 255, 0.18);
+  --text-primary: #E2E8F0;
+  --text-secondary: #94A3B8;
+  --text-muted: #475569;
+  --text-dim: #2A3547;
 
-  --blue:    #3B82F6;
-  --cyan:    #06B6D4;
-  --purple:  #8B5CF6;
-  --green:   #10B981;
-  --orange:  #F59E0B;
-  --pink:    #EC4899;
-  --red:     #EF4444;
-  --yellow:  #EAB308;
-  --slate:   #64748B;
+  --blue: #3B82F6;
+  --cyan: #06B6D4;
+  --purple: #8B5CF6;
+  --green: #10B981;
+  --orange: #F59E0B;
+  --pink: #EC4899;
+  --red: #EF4444;
+  --yellow: #EAB308;
+  --slate: #64748B;
 
-  --shadow-sm:   0 2px 12px rgba(0,0,0,0.4);
-  --shadow-node: 0 4px 28px rgba(0,0,0,0.55);
-  --shadow-lg:   0 8px 48px rgba(0,0,0,0.7);
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --shadow-node: 0 4px 28px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.7);
 }
 
 /* ─── Reset ──────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* *,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+} */
 
 body {
   font-family: 'DM Sans', sans-serif;
@@ -64,13 +70,6 @@ body {
   box-shadow: var(--shadow-lg), 0 0 0 1px color-mix(in srgb, var(--accent, var(--blue)) 40%, transparent);
 }
 
-/* Accent bar */
-.node-accent-bar {
-  height: 3px;
-  border-radius: 10px 10px 0 0;
-  background: var(--accent, var(--blue));
-}
-
 /* Header */
 .node-header {
   display: flex;
@@ -92,7 +91,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--text-primary);
+  color: var(--accent, var(--blue));
   flex: 1;
 }
 
@@ -115,7 +114,11 @@ body {
   gap: 8px;
 }
 
-.node-field { display: flex; flex-direction: column; gap: 4px; }
+.node-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
 .field-label {
   font-family: 'JetBrains Mono', monospace;
@@ -143,7 +146,9 @@ body {
   -webkit-appearance: none;
 }
 
-.field-input::placeholder { color: var(--text-dim); }
+.field-input::placeholder {
+  color: var(--text-dim);
+}
 
 .field-input:focus,
 .field-select:focus,
@@ -160,7 +165,10 @@ body {
   transition: border-color 0.15s ease, box-shadow 0.15s ease, width 0.1s ease, height 0.1s ease;
 }
 
-.field-select option { background: #111827; color: var(--text-primary); }
+.field-select option {
+  background: #111827;
+  color: var(--text-primary);
+}
 
 /* Node info text */
 .node-info {
@@ -181,8 +189,15 @@ body {
   z-index: 10 !important;
 }
 
-.react-flow__handle-left  { background: var(--cyan) !important;  left: -5px !important;  }
-.react-flow__handle-right { background: var(--green) !important; right: -5px !important; }
+.react-flow__handle-left {
+  background: var(--cyan) !important;
+  left: -5px !important;
+}
+
+.react-flow__handle-right {
+  background: var(--green) !important;
+  right: -5px !important;
+}
 
 .react-flow__handle:hover {
   transform: scale(1.5) !important;
@@ -199,13 +214,21 @@ body {
   pointer-events: none;
   letter-spacing: 0.04em;
 }
-.handle-label-left  { left: 12px; }
-.handle-label-right { right: 12px; }
+
+.handle-label-left {
+  left: 12px;
+}
+
+.handle-label-right {
+  right: 12px;
+}
 
 /* ─── Toolbar ────────────────────────────────────────── */
 .toolbar {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 60px;
   background: rgba(6, 8, 15, 0.92);
   backdrop-filter: blur(24px);
@@ -257,7 +280,10 @@ body {
   overflow-x: auto;
   scrollbar-width: none;
 }
-.toolbar-nodes::-webkit-scrollbar { display: none; }
+
+.toolbar-nodes::-webkit-scrollbar {
+  display: none;
+}
 
 .draggable-node {
   display: flex;
@@ -279,15 +305,18 @@ body {
 }
 
 .draggable-node:hover {
-  background: rgba(255,255,255,0.045);
+  background: rgba(255, 255, 255, 0.045);
   color: var(--text-primary);
   border-color: var(--border-node);
 }
 
-.draggable-node:active { cursor: grabbing; }
+.draggable-node:active {
+  cursor: grabbing;
+}
 
 .node-dot {
-  width: 7px; height: 7px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -304,7 +333,9 @@ body {
 /* ─── Submit Bar ─────────────────────────────────────── */
 .submit-bar {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 56px;
   background: rgba(6, 8, 15, 0.92);
   backdrop-filter: blur(24px);
@@ -326,7 +357,8 @@ body {
 
 .status-dot {
   display: inline-block;
-  width: 6px; height: 6px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--green);
   margin-right: 8px;
@@ -335,8 +367,15 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .submit-btn {
@@ -364,7 +403,9 @@ body {
   box-shadow: 0 0 24px rgba(59, 130, 246, 0.18);
 }
 
-.submit-btn:active { transform: scale(0.98); }
+.submit-btn:active {
+  transform: scale(0.98);
+}
 
 .submit-btn.loading {
   opacity: 0.7;
@@ -392,7 +433,9 @@ body {
 }
 
 /* ─── ReactFlow Overrides ────────────────────────────── */
-.react-flow__background { background: var(--bg-canvas); }
+.react-flow__background {
+  background: var(--bg-canvas);
+}
 
 .react-flow__controls {
   background: var(--bg-node) !important;
@@ -425,11 +468,16 @@ body {
   overflow: hidden;
 }
 
-.react-flow__minimap-mask { fill: rgba(6, 8, 15, 0.6) !important; }
-.react-flow__minimap-node { fill: rgba(255,255,255,0.08) !important; }
+.react-flow__minimap-mask {
+  fill: rgba(6, 8, 15, 0.6) !important;
+}
+
+.react-flow__minimap-node {
+  fill: rgba(255, 255, 255, 0.08) !important;
+}
 
 .react-flow__edge-path {
-  stroke: rgba(255,255,255,0.12) !important;
+  stroke: rgba(255, 255, 255, 0.12) !important;
   stroke-width: 1.5 !important;
 }
 
@@ -438,7 +486,9 @@ body {
   stroke: rgba(59, 130, 246, 0.55) !important;
 }
 
-.react-flow__edge-textwrapper { display: none; }
+.react-flow__edge-textwrapper {
+  display: none;
+}
 
 .react-flow__connection-path {
   stroke: var(--blue) !important;

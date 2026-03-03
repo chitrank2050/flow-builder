@@ -1,7 +1,7 @@
 import { Handle, Position } from '@xyflow/react';
 import type { CSSProperties, ReactNode } from 'react';
 import NodeField, { type BaseField } from './NodeField';
-import NodeWithToolbar from '../../components/NodeToolbar';
+import NodeToolbar from '../../components/NodeToolbar';
 
 // Handle types
 interface NodeHandle {
@@ -46,8 +46,6 @@ export const BaseNode = ({
       className="base-node"
       style={{ '--accent': accentColor, ...style } as CSSProperties}
     >
-      <div className="node-accent-bar" style={{ background: accentColor }} />
-
       <div className="node-header">
         {icon && <span className="node-icon">{icon}</span>}
         <span className="node-title">{title}</span>
@@ -100,7 +98,7 @@ export const BaseNode = ({
         )
       })}
 
-      <NodeWithToolbar isVisible />
+      <NodeToolbar id={id} />
     </div>
   )
 }

@@ -74,9 +74,9 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
               key={v}
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 9,
-                padding: '2px 7px',
-                borderRadius: 3,
+                fontSize: 8,
+                padding: '2px 8px',
+                borderRadius: 4,
                 background: 'rgba(59,130,246,0.1)',
                 color: '#93C5FD',
                 border: '1px solid rgba(59,130,246,0.2)',

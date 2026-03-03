@@ -43,5 +43,6 @@ export const STORE_SELECTOR = (s: ReturnType<typeof usePipelineStore.getState>) 
   addNode: s.addNode,
   onNodesChange: s.onNodesChange,
   onEdgesChange: s.onEdgesChange,
-  onConnect: s.onConnect
+  onConnect: s.onConnect,
+  deleteNode: s.deleteNode,
 })
