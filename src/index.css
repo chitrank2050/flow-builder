@@ -139,6 +139,7 @@ body {
   width: 100%;
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  appearance: none;
   -webkit-appearance: none;
 }
 
@@ -474,4 +475,15 @@ body {
   line-height: 1.6;
   width: 100%;
   min-height: 60px;
+}
+
+.edge-label-renderer__custom-edge {
+  position: absolute;
+  background-color: #0d1220;
+  color: #9f9fa9;
+  padding: 8px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  box-shadow: var(--shadow-node);
 }

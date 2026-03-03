@@ -1,40 +1,29 @@
-import { useCallback, useRef, useState } from 'react'
 import {
-  ReactFlow,
   Background,
   BackgroundVariant,
   ConnectionLineType,
   Controls,
   MiniMap,
+  ReactFlow,
   type ReactFlowInstance,
   type XYPosition,
-  MarkerType,
+  type Node,
 } from '@xyflow/react'
+import { useCallback, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
 import { nodeTypes, type PipelineNode } from '../nodes'
 import { usePipelineStore } from '../store/pipelineStore'
 
-import '@xyflow/react/dist/style.css';
+import {
+  APPLICATION_CANVAS_EDGES,
+  DEFAULT_EDGE_OPTIONS,
+  PRO_OPTIONS,
+  SNAP_GRID,
+  STORE_SELECTOR,
+} from './constants';
 
-/* ========================= */
-
-const proOptions = { hideAttribution: true }
-const snapGrid: [number, number] = [16, 16]
-
-/* ========================= */
-
-const selector = (s: ReturnType<typeof usePipelineStore.getState>) => ({
-  nodes: s.nodes,
-  edges: s.edges,
-  getNodeID: s.getNodeID,
-  addNode: s.addNode,
-  onNodesChange: s.onNodesChange,
-  onEdgesChange: s.onEdgesChange,
-  onConnect: s.onConnect,
-})
-
-/* ========================= */
+import '@xyflow/react/dist/style.css'
 
 export default function PipelineCanvas() {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -42,7 +31,7 @@ export default function PipelineCanvas() {
   const [rfInstance, setRfInstance] =
     useState<ReactFlowInstance | null>(null)
 
-  const store = usePipelineStore(useShallow(selector))
+  const store = usePipelineStore(useShallow(STORE_SELECTOR))
 
   const onDrop = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
@@ -84,6 +73,7 @@ export default function PipelineCanvas() {
     []
   )
 
+
   return (
     <div ref={wrapperRef} className="canvas-wrapper">
       <ReactFlow
@@ -96,26 +86,12 @@ export default function PipelineCanvas() {
         onDragOver={onDragOver}
         onInit={setRfInstance}
         nodeTypes={nodeTypes}
-        proOptions={proOptions}
-        snapGrid={snapGrid}
+        edgeTypes={APPLICATION_CANVAS_EDGES}
+        proOptions={PRO_OPTIONS}
+        snapGrid={SNAP_GRID}
         snapToGrid
         connectionLineType={ConnectionLineType.SmoothStep}
-        defaultEdgeOptions={{
-          markerEnd: {
-            type: MarkerType.ArrowClosed,
-            width: 18,
-            height: 18,
-          },
-          style: {
-            stroke: 'rgba(255,255,255,0.12)',
-            strokeWidth: 1.5,
-          },
-          labelStyle: {
-            fill: 'rgba(255,255,255,0.8)',
-            fontWeight: 500,
-            fontSize: 12,
-          },
-        }}
+        defaultEdgeOptions={DEFAULT_EDGE_OPTIONS}
         fitView
         fitViewOptions={{
           padding: 0.2,

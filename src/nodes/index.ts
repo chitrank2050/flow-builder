@@ -1,4 +1,4 @@
-import type { NodeProps } from '@xyflow/react';
+import type { NodeTypes } from '@xyflow/react';
 import ApiNode, { type ApiNode as ApiNodeType } from './types/ApiNode';
 import ConditionNode, { type ConditionNode as ConditionNodeType } from './types/ConditionNode';
 import FilterNode, { type FilterNode as FilterNodeType } from './types/FilterNode';
@@ -21,9 +21,7 @@ export interface NODE_MAP {
   noteNode: NoteNodeType
 }
 
-export const nodeTypes: {
-  [K in keyof NODE_MAP]: React.ComponentType<NodeProps<NODE_MAP[K]>>
-} = {
+export const nodeTypes: NodeTypes = {
   inputNode: InputNode,
   outputNode: OutputNode,
   llmNode: LLMNode,
@@ -34,7 +32,6 @@ export const nodeTypes: {
   filterNode: FilterNode,
   noteNode: NoteNode,
 }
-
 
 export const NODE_CATALOG: {
   type: keyof NODE_MAP

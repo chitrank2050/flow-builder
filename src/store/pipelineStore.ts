@@ -10,6 +10,7 @@ import {
 } from '@xyflow/react'
 import { create } from 'zustand'
 import type { PipelineNode } from '../nodes'
+
 // Store Type
 interface PipelineState {
   nodes: PipelineNode[]
@@ -67,20 +68,18 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
       edges: applyEdgeChanges(changes, get().edges),
     }),
 
-  onConnect: (connection) => {
-    set((state) => ({
-      edges: addEdge(
-        {
-          ...connection,
-          sourceHandle: connection.sourceHandle,
-          targetHandle: connection.targetHandle,
-          id: `edge-${connection.source}-${connection.sourceHandle}-${connection.target}-${connection.targetHandle}`,
+  onConnect: (connection) => set((state) => ({
+    edges: addEdge(
+      {
+        ...connection,
+        data: {
           label: `${connection.source} → ${connection.target}`,
         },
-        state.edges
-      ),
-    }))
-  },
+        type: 'custom',
+      },
+      state.edges
+    ),
+  })),
 
   updateNodeField: <T extends PipelineNode['type'], K extends keyof Extract<PipelineNode, { type: T }>['data']>(
     nodeId: string,

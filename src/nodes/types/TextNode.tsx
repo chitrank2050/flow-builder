@@ -26,7 +26,6 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
   const inputHandles = variables.map((v) => ({
     id: v,
     label: v,
-    // style: { background: '#06B6D4' },
   }));
 
   const { dims, mirrorRef } = useAutoResize(text, 200, 72);
@@ -91,7 +90,7 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
       )}
 
       {/* invisible mirror used for sizing */}
-      {/* <div
+      <div
         ref={mirrorRef}
         aria-hidden="true"
         style={{
@@ -109,7 +108,7 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
           left: 0,
           zIndex: -1,
         }}
-      /> */}
+      />
     </BaseNode>
   );
 };
