@@ -6,13 +6,6 @@ import NodeField, { type BaseField } from './NodeField';
 interface NodeHandle {
   id: string
   label?: string
-  /**
-   * Optional CSS top value (e.g. '50%'). When omitted we auto-calc
-   * based on index and count.
-   */
-  position?: string
-  /** Additional inline styles for the handle itself. */
-  style?: CSSProperties
 }
 
 // Component Props
@@ -44,8 +37,7 @@ export const BaseNode = ({
   children,
   style = {},
 }: BaseNodeProps) => {
-  const resolveTop = (arr: NodeHandle[], i: number) =>
-    arr[i].position ?? `${((i + 1) / (arr.length + 1)) * 100}%`
+  const resolveTop = (arr: NodeHandle[], i: number) => `${((i + 1) / (arr.length + 1)) * 100}%`
 
   return (
     <div
@@ -77,39 +69,32 @@ export const BaseNode = ({
       {children && <div className="node-fields">{children}</div>}
 
       {/* Inputs */}
-      {inputs.map((input) => {
+      {inputs.map((input, i) => {
+        const top = resolveTop(inputs, i)
+
         return (
           <Handle
             key={input.id}
             type="target"
             position={Position.Left}
             id={input.id}
-          // style={{ top, ...(input.style || {}) }}
+            style={{ top }}
           />
         )
       })}
 
       {/* Outputs */}
       {outputs.map((output, i) => {
-        const top = output.position ?? resolveTop(outputs, i)
-        return (
+        const top = resolveTop(outputs, i)
 
+        return (
           <Handle
             key={output.id}
             type="source"
             position={Position.Right}
             id={output.id}
-          // style={{ top, ...(output.style || {}) }}
+            style={{ top }}
           />
-
-          // <div key={output.id}>
-
-          //   {output.label && (
-          //     <span className="handle-label handle-label-right" style={{ top }}>
-          //       {output.label}
-          //     </span>
-          //   )}
-          // </div>
         )
       })}
     </div>

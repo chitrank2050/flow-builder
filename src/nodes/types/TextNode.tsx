@@ -1,6 +1,9 @@
 import type { Node, NodeProps } from '@xyflow/react';
 import { useCallback, useState } from 'react';
 
+// custom hooks
+import { useUpdateNodeInternalsEffect } from '../../hooks/useUpdateNodeInternalsEffect';
+
 // components/hooks
 import { useAutoResize } from '../../hooks/useAutoResize';
 import { useVariableHandles } from '../../hooks/useVariableHandles';
@@ -23,9 +26,13 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
   const inputHandles = variables.map((v) => ({
     id: v,
     label: v,
+    // style: { background: '#06B6D4' },
   }));
 
   const { dims, mirrorRef } = useAutoResize(text, 200, 72);
+
+  // refresh react-flow internals when handle count or size changes
+  useUpdateNodeInternalsEffect(id, [variables.length, dims.width, dims.height]);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -42,7 +49,7 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
       accentColor={ACCENT}
       inputs={inputHandles}
       outputs={[
-        { id: 'text-output', label: 'output' }
+        { id: 'output', label: 'output' }
       ]}
       style={{ width: dims.width + 28 }}
     >
@@ -84,7 +91,7 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
       )}
 
       {/* invisible mirror used for sizing */}
-      <div
+      {/* <div
         ref={mirrorRef}
         aria-hidden="true"
         style={{
@@ -102,7 +109,7 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
           left: 0,
           zIndex: -1,
         }}
-      />
+      /> */}
     </BaseNode>
   );
 };
