@@ -11,7 +11,7 @@ import {
 import { useCallback, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
-import { nodeTypes, type PipelineNode } from '../nodes'
+import { CANVAS_NODE_TYPES, type PipelineNode } from '../nodes'
 import { usePipelineStore } from '../store/pipelineStore'
 
 import {
@@ -21,8 +21,6 @@ import {
   SNAP_GRID,
   STORE_SELECTOR,
 } from './constants';
-
-import '@xyflow/react/dist/style.css'
 
 export default function PipelineCanvas() {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -84,7 +82,7 @@ export default function PipelineCanvas() {
         onDrop={onDrop}
         onDragOver={onDragOver}
         onInit={setRfInstance}
-        nodeTypes={nodeTypes}
+        nodeTypes={CANVAS_NODE_TYPES}
         edgeTypes={APPLICATION_CANVAS_EDGES}
         proOptions={PRO_OPTIONS}
         snapGrid={SNAP_GRID}

@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+/* @import "reactflow/dist/style.css"; */
+@import "@xyflow/react/dist/style.css";
+
 @import "tailwindcss";
 
 /* ─── Design Tokens ──────────────────────────────────── */
@@ -437,13 +440,13 @@ body {
   background: var(--bg-canvas);
 }
 
-.react-flow__controls {
+/* .react-flow__controls {
   background: var(--bg-node) !important;
   border: 1px solid var(--border-node) !important;
   border-radius: 8px !important;
   overflow: hidden;
   box-shadow: var(--shadow-sm) !important;
-}
+} */
 
 .react-flow__controls-button {
   background: transparent !important;
@@ -536,4 +539,12 @@ body {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
   box-shadow: var(--shadow-node);
+}
+
+@layer components {
+  .react-flow__controls {
+    @apply rounded-lg overflow-hidden border shadow-sm;
+    background: var(--bg-node);
+    border-color: var(--border-node);
+  }
 }

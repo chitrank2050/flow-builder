@@ -10,46 +10,42 @@ import TextNode, { type TextNode as TextNodeType } from './types/TextNode';
 import TransformNode, { type TransformNode as TransformNodeType } from './types/TransformNode';
 
 export interface NODE_MAP {
-  inputNode: InputNodeType
-  apiNode: ApiNodeType
-  outputNode: OutputNodeType
-  llmNode: LLMNodeType
-  textNode: TextNodeType
-  transformNode: TransformNodeType
-  conditionNode: ConditionNodeType
-  filterNode: FilterNodeType
-  noteNode: NoteNodeType
+  input: InputNodeType
+  output: OutputNodeType
+  api: ApiNodeType
+  llm: LLMNodeType
+  text: TextNodeType
+  transform: TransformNodeType
+  condition: ConditionNodeType
+  filter: FilterNodeType
+  note: NoteNodeType
 }
 
-export const nodeTypes: NodeTypes = {
-  inputNode: InputNode,
-  outputNode: OutputNode,
-  llmNode: LLMNode,
-  textNode: TextNode,
-  apiNode: ApiNode,
-  transformNode: TransformNode,
-  conditionNode: ConditionNode,
-  filterNode: FilterNode,
-  noteNode: NoteNode,
-}
+export const NODE_CATALOG = [
+  { type: 'input', label: 'Input', color: '#06B6D4', icon: '→', component: InputNode },
+  { type: 'output', label: 'Output', color: '#10B981', icon: '←', component: OutputNode },
+  { type: 'llm', label: 'LLM', color: '#8B5CF6', icon: '✦', component: LLMNode },
+  { type: 'text', label: 'Text', color: '#3B82F6', icon: 'T', component: TextNode },
+  { type: 'api', label: 'API', color: '#F59E0B', icon: '⇄', component: ApiNode },
+  { type: 'transform', label: 'Transform', color: '#EC4899', icon: '⟳', component: TransformNode },
+  { type: 'condition', label: 'Condition', color: '#EF4444', icon: '⑂', component: ConditionNode },
+  { type: 'filter', label: 'Filter', color: '#EAB308', icon: '⊟', component: FilterNode },
+  { type: 'note', label: 'Note', color: '#64748B', icon: '✎', component: NoteNode },
+] as const;
 
-export const NODE_CATALOG: {
-  type: keyof NODE_MAP
-  label: string
-  color: string
-  icon: string
-}[] = [
-    { type: 'inputNode', label: 'Input', color: '#06B6D4', icon: '→' },
-    { type: 'outputNode', label: 'Output', color: '#10B981', icon: '←' },
-    { type: 'llmNode', label: 'LLM', color: '#8B5CF6', icon: '✦' },
-    { type: 'textNode', label: 'Text', color: '#3B82F6', icon: 'T' },
-    { type: 'apiNode', label: 'API', color: '#F59E0B', icon: '⇄' },
-    { type: 'transformNode', label: 'Transform', color: '#EC4899', icon: '⟳' },
-    { type: 'conditionNode', label: 'Condition', color: '#EF4444', icon: '⑂' },
-    { type: 'filterNode', label: 'Filter', color: '#EAB308', icon: '⊟' },
-    { type: 'noteNode', label: 'Note', color: '#64748B', icon: '✎' },
-  ]
+export type NodeType = typeof NODE_CATALOG[number]['type'];
 
-export type PipelineNode = {
-  [K in keyof NODE_MAP]: NODE_MAP[K]
-}[keyof NODE_MAP]
+
+type ExtractNodeData<T> =
+  T extends React.ComponentType<infer P>
+  ? P extends { data: infer D }
+  ? D
+  : never
+  : never;
+
+export const CANVAS_NODE_TYPES: NodeTypes = Object.fromEntries(
+  NODE_CATALOG.map(n => [n.type, n.component])
+);
+
+export type PipelineNode =
+  ExtractNodeData<typeof NODE_CATALOG[number]['component']>;
