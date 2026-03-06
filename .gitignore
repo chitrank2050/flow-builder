@@ -18,16 +18,21 @@ dist-ssr/
 coverage/
 
 # Env files
+*.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# vercel
+.vercel
+
 # OS
 .DS_Store
+*.pem
 
 # Editor
-.vscode/
+# .vscode/
 !.vscode/extensions.json
 .idea/
 *.suo
@@ -36,4 +41,3 @@ coverage/
 *.sln
 *.sw?
 
-*.env
