@@ -20,13 +20,12 @@ import {
   PRO_OPTIONS,
   SNAP_GRID,
   STORE_SELECTOR,
-} from './constants';
+} from './constants'
 
 export default function PipelineCanvas() {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
 
-  const [rfInstance, setRfInstance] =
-    useState<ReactFlowInstance<PipelineNode> | null>(null)
+  const [rfInstance, setRfInstance] = useState<ReactFlowInstance<PipelineNode> | null>(null)
 
   const store = usePipelineStore(useShallow(STORE_SELECTOR))
 
@@ -62,14 +61,10 @@ export default function PipelineCanvas() {
     [rfInstance, store]
   )
 
-  const onDragOver = useCallback(
-    (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault()
-      e.dataTransfer.dropEffect = 'move'
-    },
-    []
-  )
-
+  const onDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+  }, [])
 
   return (
     <div ref={wrapperRef} className="canvas-wrapper">
@@ -101,10 +96,7 @@ export default function PipelineCanvas() {
           color="rgba(255,255,255,0.07)"
         />
         <Controls />
-        <MiniMap
-          nodeColor={() => 'rgba(255,255,255,0.08)'}
-          maskColor="rgba(6,8,15,0.6)"
-        />
+        <MiniMap nodeColor={() => 'rgba(255,255,255,0.08)'} maskColor="rgba(6,8,15,0.6)" />
       </ReactFlow>
     </div>
   )

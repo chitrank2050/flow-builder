@@ -1,17 +1,17 @@
-import type { Node, NodeProps } from '@xyflow/react';
-import { useState } from 'react';
-import { BaseNode } from '../base/BaseNode';
+import type { Node, NodeProps } from '@xyflow/react'
+import { useState } from 'react'
+import { BaseNode } from '../base/BaseNode'
 
 type TransformNodeData = {
-  fn?: string;
-  lang?: string;
+  fn?: string
+  lang?: string
 }
 
 export type TransformNode = Node<TransformNodeData, 'transformNode'>
 
 export default function TransformNode({ id, data }: NodeProps<TransformNode>) {
-  const [fn, setFn] = useState(data?.fn || 'data => data');
-  const [lang, setLang] = useState(data?.lang || 'JavaScript');
+  const [fn, setFn] = useState(data?.fn || 'data => data')
+  const [lang, setLang] = useState(data?.lang || 'JavaScript')
 
   return (
     <BaseNode
@@ -41,5 +41,5 @@ export default function TransformNode({ id, data }: NodeProps<TransformNode>) {
         },
       ]}
     />
-  );
-};
+  )
+}

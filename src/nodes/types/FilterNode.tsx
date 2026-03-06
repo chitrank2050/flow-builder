@@ -1,19 +1,19 @@
-import type { Node, NodeProps } from '@xyflow/react';
-import { useState } from 'react';
-import { BaseNode } from '../base/BaseNode';
+import type { Node, NodeProps } from '@xyflow/react'
+import { useState } from 'react'
+import { BaseNode } from '../base/BaseNode'
 
 type FilterNodeData = {
-  field?: string;
-  op?: string;
-  value?: string;
+  field?: string
+  op?: string
+  value?: string
 }
 
 export type FilterNode = Node<FilterNodeData, 'filterNode'>
 
 export default function FilterNode({ id, data }: NodeProps<FilterNode>) {
-  const [field, setField] = useState(data?.field || '');
-  const [op, setOp] = useState(data?.op || 'equals');
-  const [value, setValue] = useState(data?.value || '');
+  const [field, setField] = useState(data?.field || '')
+  const [op, setOp] = useState(data?.op || 'equals')
+  const [value, setValue] = useState(data?.value || '')
 
   return (
     <BaseNode
@@ -59,5 +59,5 @@ export default function FilterNode({ id, data }: NodeProps<FilterNode>) {
         },
       ]}
     />
-  );
-};
+  )
+}

@@ -1,6 +1,6 @@
-import type { Node, NodeProps } from '@xyflow/react';
-import { useState } from 'react';
-import { BaseNode } from '../base/BaseNode';
+import type { Node, NodeProps } from '@xyflow/react'
+import { useState } from 'react'
+import { BaseNode } from '../base/BaseNode'
 
 type ApiNodeData = {
   url?: string
@@ -11,9 +11,9 @@ type ApiNodeData = {
 export type ApiNode = Node<ApiNodeData, 'apiNode'>
 
 export default function ApiNode({ id, data }: NodeProps<ApiNode>) {
-  const [url, setUrl] = useState(data?.url || '');
-  const [method, setMethod] = useState(data?.method || 'GET');
-  const [auth, setAuth] = useState(data?.auth || 'None');
+  const [url, setUrl] = useState(data?.url || '')
+  const [method, setMethod] = useState(data?.method || 'GET')
+  const [auth, setAuth] = useState(data?.auth || 'None')
 
   return (
     <BaseNode
@@ -57,5 +57,5 @@ export default function ApiNode({ id, data }: NodeProps<ApiNode>) {
         },
       ]}
     />
-  );
-};
+  )
+}

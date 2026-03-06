@@ -1,17 +1,17 @@
-import type { Node, NodeProps } from '@xyflow/react';
-import { useState } from 'react';
-import { BaseNode } from '../base/BaseNode';
+import type { Node, NodeProps } from '@xyflow/react'
+import { useState } from 'react'
+import { BaseNode } from '../base/BaseNode'
 
 type OutputNodeData = {
-  outputName?: string;
-  outputType?: string;
+  outputName?: string
+  outputType?: string
 }
 
 export type OutputNode = Node<OutputNodeData, 'outputNode'>
 
 export default function OutputNode({ id, data }: NodeProps<OutputNode>) {
-  const [name, setName] = useState(data?.outputName || id.replace('customOutput-', 'output_'));
-  const [outputType, setOutputType] = useState(data?.outputType || 'Text');
+  const [name, setName] = useState(data?.outputName || id.replace('customOutput-', 'output_'))
+  const [outputType, setOutputType] = useState(data?.outputType || 'Text')
 
   return (
     <BaseNode
@@ -39,5 +39,5 @@ export default function OutputNode({ id, data }: NodeProps<OutputNode>) {
         },
       ]}
     />
-  );
-};
+  )
+}

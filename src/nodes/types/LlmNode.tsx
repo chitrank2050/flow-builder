@@ -1,17 +1,17 @@
-import type { Node, NodeProps } from '@xyflow/react';
-import { useState } from 'react';
-import { BaseNode } from '../base/BaseNode';
+import type { Node, NodeProps } from '@xyflow/react'
+import { useState } from 'react'
+import { BaseNode } from '../base/BaseNode'
 
 type LLMNodeData = {
-  model?: string;
-  temperature?: string;
+  model?: string
+  temperature?: string
 }
 
 export type LLMNode = Node<LLMNodeData, 'llmNode'>
 
 export default function LLMNode({ id, data }: NodeProps<LLMNode>) {
-  const [model, setModel] = useState(data?.model || 'gpt-4o');
-  const [temperature, setTemperature] = useState(data?.temperature || '0.7');
+  const [model, setModel] = useState(data?.model || 'gpt-4o')
+  const [temperature, setTemperature] = useState(data?.temperature || '0.7')
 
   return (
     <BaseNode
@@ -31,7 +31,14 @@ export default function LLMNode({ id, data }: NodeProps<LLMNode>) {
           type: 'select',
           label: 'Model',
           value: model,
-          options: ['gpt-4o', 'gpt-4o-mini', 'gpt-3.5-turbo', 'claude-3-5-sonnet', 'claude-3-haiku', 'gemini-1.5-pro'],
+          options: [
+            'gpt-4o',
+            'gpt-4o-mini',
+            'gpt-3.5-turbo',
+            'claude-3-5-sonnet',
+            'claude-3-haiku',
+            'gemini-1.5-pro',
+          ],
           onChange: setModel,
         },
         {
@@ -44,5 +51,5 @@ export default function LLMNode({ id, data }: NodeProps<LLMNode>) {
         },
       ]}
     />
-  );
-};
+  )
+}

@@ -1,21 +1,16 @@
-import {
-  BaseEdge,
-  EdgeLabelRenderer,
-  getBezierPath,
-  type Position,
-} from '@xyflow/react';
+import { BaseEdge, EdgeLabelRenderer, getBezierPath, type Position } from '@xyflow/react'
 
 type Props = {
-  id: string;
-  sourceX: number;
-  sourceY: number;
-  targetX: number;
-  targetY: number;
-  sourcePosition?: Position;
-  targetPosition: Position;
+  id: string
+  sourceX: number
+  sourceY: number
+  targetX: number
+  targetY: number
+  sourcePosition?: Position
+  targetPosition: Position
   data: {
-    label: string;
-  };
+    label: string
+  }
 }
 
 export default function CustomEdgeWithLabel({
@@ -35,8 +30,7 @@ export default function CustomEdgeWithLabel({
     targetX,
     targetY,
     targetPosition,
-  });
-
+  })
 
   return (
     <>
@@ -52,5 +46,5 @@ export default function CustomEdgeWithLabel({
         </div>
       </EdgeLabelRenderer>
     </>
-  );
-};
+  )
+}

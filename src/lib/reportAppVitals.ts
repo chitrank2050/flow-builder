@@ -1,9 +1,9 @@
-import { type Metric, onCLS, onFCP, onINP, onLCP } from 'web-vitals';
+import { type Metric, onCLS, onFCP, onINP, onLCP } from 'web-vitals'
 
-declare function gtag(...args: unknown[]): void;
+declare function gtag(...args: unknown[]): void
 
 function sendToGoogleAnalytics({ name, delta, value, id }: Metric) {
-  if (typeof gtag === 'undefined') return;
+  if (typeof gtag === 'undefined') return
 
   gtag('event', name, {
     value: delta,

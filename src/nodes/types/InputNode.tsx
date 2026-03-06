@@ -1,17 +1,17 @@
-import type { Node, NodeProps } from '@xyflow/react';
-import { useState } from 'react';
-import { BaseNode } from '../base/BaseNode';
+import type { Node, NodeProps } from '@xyflow/react'
+import { useState } from 'react'
+import { BaseNode } from '../base/BaseNode'
 
 type InputNodeData = {
-  inputName?: string;
-  inputType?: string;
+  inputName?: string
+  inputType?: string
 }
 
 export type InputNode = Node<InputNodeData, 'inputNode'>
 
 export default function InputNode({ id, data }: NodeProps<InputNode>) {
-  const [name, setName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
-  const [inputType, setInputType] = useState(data?.inputType || 'Text');
+  const [name, setName] = useState(data?.inputName || id.replace('customInput-', 'input_'))
+  const [inputType, setInputType] = useState(data?.inputType || 'Text')
 
   return (
     <BaseNode
@@ -39,5 +39,5 @@ export default function InputNode({ id, data }: NodeProps<InputNode>) {
         },
       ]}
     />
-  );
-};
+  )
+}

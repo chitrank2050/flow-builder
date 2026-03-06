@@ -1,8 +1,8 @@
 // components
-import { ReactFlowProvider } from '@xyflow/react';
-import PipelineCanvas from './canvas/PipelineCanvas';
-import SubmitButton from './canvas/SubmitButton';
-import Toolbar from './canvas/Toolbar';
+import { ReactFlowProvider } from '@xyflow/react'
+import PipelineCanvas from './canvas/PipelineCanvas'
+import SubmitButton from './canvas/SubmitButton'
+import Toolbar from './canvas/Toolbar'
 
 // import '../tailwind.config';
 
@@ -13,5 +13,5 @@ export default function App() {
       <PipelineCanvas />
       <SubmitButton />
     </ReactFlowProvider>
-  );
+  )
 }

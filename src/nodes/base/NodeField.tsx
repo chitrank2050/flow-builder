@@ -24,10 +24,7 @@ type Props = {
 }
 
 // Field Renderer
-export default function NodeField({
-  field,
-  accentColor,
-}: Props) {
+export default function NodeField({ field, accentColor }: Props) {
   const style = { '--accent': accentColor } as CSSProperties
 
   if (field.type === 'select') {
@@ -80,10 +77,7 @@ export default function NodeField({
     return (
       <div className="node-field">
         {field.label && <span className="field-label">{field.label}</span>}
-        <div
-          className="field-input"
-          style={{ color: 'var(--color-neutral-500)', ...style }}
-        >
+        <div className="field-input" style={{ color: 'var(--color-neutral-500)', ...style }}>
           {field.value || '—'}
         </div>
       </div>

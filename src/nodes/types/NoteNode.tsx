@@ -1,15 +1,15 @@
-import type { Node, NodeProps } from '@xyflow/react';
-import { useState } from 'react';
-import { BaseNode } from '../base/BaseNode';
+import type { Node, NodeProps } from '@xyflow/react'
+import { useState } from 'react'
+import { BaseNode } from '../base/BaseNode'
 
 type NoteNodeData = {
-  text?: string;
+  text?: string
 }
 
 export type NoteNode = Node<NoteNodeData, 'noteNode'>
 
 export default function NoteNode({ id, data }: NodeProps<NoteNode>) {
-  const [text, setText] = useState(data?.text || 'Add a note...');
+  const [text, setText] = useState(data?.text || 'Add a note...')
 
   return (
     <BaseNode
@@ -25,9 +25,9 @@ export default function NoteNode({ id, data }: NodeProps<NoteNode>) {
           label: 'Node',
           value: text,
           onChange: setText,
-          placeholder: "Add a note..."
+          placeholder: 'Add a note...',
         },
       ]}
     />
-  );
-};
+  )
+}

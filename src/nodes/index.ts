@@ -1,13 +1,13 @@
-import type { NodeTypes } from '@xyflow/react';
-import ApiNode, { type ApiNode as ApiNodeType } from './types/ApiNode';
-import ConditionNode, { type ConditionNode as ConditionNodeType } from './types/ConditionNode';
-import FilterNode, { type FilterNode as FilterNodeType } from './types/FilterNode';
-import InputNode, { type InputNode as InputNodeType } from './types/InputNode';
-import LLMNode, { type LLMNode as LLMNodeType } from './types/LlmNode';
-import NoteNode, { type NoteNode as NoteNodeType } from './types/NoteNode';
-import OutputNode, { type OutputNode as OutputNodeType } from './types/OutputNode';
-import TextNode, { type TextNode as TextNodeType } from './types/TextNode';
-import TransformNode, { type TransformNode as TransformNodeType } from './types/TransformNode';
+import type { NodeTypes } from '@xyflow/react'
+import ApiNode, { type ApiNode as ApiNodeType } from './types/ApiNode'
+import ConditionNode, { type ConditionNode as ConditionNodeType } from './types/ConditionNode'
+import FilterNode, { type FilterNode as FilterNodeType } from './types/FilterNode'
+import InputNode, { type InputNode as InputNodeType } from './types/InputNode'
+import LLMNode, { type LLMNode as LLMNodeType } from './types/LlmNode'
+import NoteNode, { type NoteNode as NoteNodeType } from './types/NoteNode'
+import OutputNode, { type OutputNode as OutputNodeType } from './types/OutputNode'
+import TextNode, { type TextNode as TextNodeType } from './types/TextNode'
+import TransformNode, { type TransformNode as TransformNodeType } from './types/TransformNode'
 
 export interface NODE_MAP {
   enter: InputNodeType
@@ -31,13 +31,13 @@ export const NODE_CATALOG = [
   { type: 'condition', label: 'Condition', color: '#EF4444', icon: '⑂', component: ConditionNode },
   { type: 'filter', label: 'Filter', color: '#EAB308', icon: '⊟', component: FilterNode },
   { type: 'note', label: 'Note', color: '#64748B', icon: '✎', component: NoteNode },
-] as const;
+] as const
 
-export type NodeType = typeof NODE_CATALOG[number]['type'];
+export type NodeType = (typeof NODE_CATALOG)[number]['type']
 
 export const CANVAS_NODE_TYPES: NodeTypes = Object.fromEntries(
-  NODE_CATALOG.map(n => [n.type, n.component])
-);
+  NODE_CATALOG.map((n) => [n.type, n.component])
+)
 
 // Union of all fully-typed ReactFlow Node objects (includes id, type, position, data, …)
-export type PipelineNode = NODE_MAP[keyof NODE_MAP];
+export type PipelineNode = NODE_MAP[keyof NODE_MAP]

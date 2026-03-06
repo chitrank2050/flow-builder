@@ -1,7 +1,7 @@
-import { Handle, Position } from '@xyflow/react';
-import type { CSSProperties, ReactNode } from 'react';
-import NodeField, { type BaseField } from './NodeField';
-import NodeToolbar from '../../components/NodeToolbar';
+import { Handle, Position } from '@xyflow/react'
+import type { CSSProperties, ReactNode } from 'react'
+import NodeToolbar from '../../components/NodeToolbar'
+import NodeField, { type BaseField } from './NodeField'
 
 // Handle types
 interface NodeHandle {
@@ -57,11 +57,7 @@ export const BaseNode = ({
       {fields.length > 0 && (
         <div className="node-fields">
           {fields.map((field) => (
-            <NodeField
-              key={field.id}
-              field={field}
-              accentColor={accentColor}
-            />
+            <NodeField key={field.id} field={field} accentColor={accentColor} />
           ))}
         </div>
       )}

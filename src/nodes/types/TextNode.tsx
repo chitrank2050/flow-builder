@@ -1,44 +1,39 @@
-import type { Node, NodeProps } from '@xyflow/react';
-import { useCallback, useState } from 'react';
-
-// custom hooks
-import { useUpdateNodeInternalsEffect } from '../../hooks/useUpdateNodeInternalsEffect';
-
+import type { Node, NodeProps } from '@xyflow/react'
+import { useCallback, useState } from 'react'
 // components/hooks
-import { useAutoResize } from '../../hooks/useAutoResize';
-import { useVariableHandles } from '../../hooks/useVariableHandles';
-import { BaseNode } from '../base/BaseNode';
+import { useAutoResize } from '../../hooks/useAutoResize'
+// custom hooks
+import { useUpdateNodeInternalsEffect } from '../../hooks/useUpdateNodeInternalsEffect'
+import { useVariableHandles } from '../../hooks/useVariableHandles'
+import { BaseNode } from '../base/BaseNode'
 
-const ACCENT = '#3B82F6';
+const ACCENT = '#3B82F6'
 
 type TextNodeData = {
-  text?: string;
-};
+  text?: string
+}
 
-export type TextNode = Node<TextNodeData, 'textNode'>;
+export type TextNode = Node<TextNodeData, 'textNode'>
 
 export default function TextNode({ id, data }: NodeProps<TextNode>) {
-  const [text, setText] = useState<string>(data?.text ?? '{{input}}');
+  const [text, setText] = useState<string>(data?.text ?? '{{input}}')
 
   // parse variables and configure handles
-  const variables = useVariableHandles(text);
+  const variables = useVariableHandles(text)
 
   const inputHandles = variables.map((v) => ({
     id: v,
     label: v,
-  }));
+  }))
 
-  const { dims, mirrorRef } = useAutoResize(text, 200, 72);
+  const { dims, mirrorRef } = useAutoResize(text, 200, 72)
 
   // refresh react-flow internals when handle count or size changes
-  useUpdateNodeInternalsEffect(id, [variables.length, dims.width, dims.height]);
+  useUpdateNodeInternalsEffect(id, [variables.length, dims.width, dims.height])
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setText(e.target.value);
-    },
-    []
-  );
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value)
+  }, [])
 
   return (
     <BaseNode
@@ -47,9 +42,7 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
       icon="T"
       accentColor={ACCENT}
       inputs={inputHandles}
-      outputs={[
-        { id: 'output', label: 'output' }
-      ]}
+      outputs={[{ id: 'output', label: 'output' }]}
       style={{ width: dims.width + 28 }}
     >
       <div className="node-field">
@@ -59,11 +52,13 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
           value={text}
           onChange={handleChange}
           placeholder="Type text or use {{variable}}"
-          style={{
-            width: dims.width,
-            height: dims.height,
-            '--accent': ACCENT,
-          } as React.CSSProperties}
+          style={
+            {
+              width: dims.width,
+              height: dims.height,
+              '--accent': ACCENT,
+            } as React.CSSProperties
+          }
         />
       </div>
 
@@ -110,5 +105,5 @@ export default function TextNode({ id, data }: NodeProps<TextNode>) {
         }}
       />
     </BaseNode>
-  );
-};
+  )
+}

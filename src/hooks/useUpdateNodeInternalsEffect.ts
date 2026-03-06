@@ -1,5 +1,5 @@
-import { useUpdateNodeInternals } from '@xyflow/react';
-import { useEffect } from 'react';
+import { useUpdateNodeInternals } from '@xyflow/react'
+import { useEffect } from 'react'
 
 /**
  * Simple helper that invokes `updateNodeInternals(id)` whenever `deps` change.
@@ -11,14 +11,11 @@ import { useEffect } from 'react';
  * @param deps - additional dependencies that should trigger an update.  Common
  *               examples are the number of handles or the node dimensions.
  */
-export function useUpdateNodeInternalsEffect(
-  id: string,
-  deps: readonly unknown[] = []
-) {
-  const update = useUpdateNodeInternals();
+export function useUpdateNodeInternalsEffect(id: string, deps: readonly unknown[] = []) {
+  const update = useUpdateNodeInternals()
 
   useEffect(() => {
-    if (!id) return;
-    update(id);
-  }, [id, update, ...deps]);
+    if (!id) return
+    update(id)
+  }, [id, update, ...deps])
 }

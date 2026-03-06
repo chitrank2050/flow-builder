@@ -38,8 +38,7 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
     return `${type}-${count}`
   },
 
-  addNode: (node) =>
-    set((state) => ({ nodes: [...state.nodes, node] })),
+  addNode: (node) => set((state) => ({ nodes: [...state.nodes, node] })),
 
   deleteNode: (nodeId) =>
     set((state) => ({
