@@ -15,13 +15,16 @@
   },
   "scripts": {
     "dev": "vite",
-    "lint": "eslint .",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
     "preview": "vite preview",
     "setup": "bash scripts/install.sh",
     "clean-setup": "pnpm run obliviate && pnpm run setup",
     "build": "tsc --noEmit && vite build",
     "build:full": "bash scripts/build.sh",
-    "obliviate": "bash scripts/obliviate.sh"
+    "obliviate": "bash scripts/obliviate.sh",
+    "prepare": "husky"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
@@ -35,17 +38,14 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@biomejs/biome": "^2.4.6",
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.56.1",
-    "@typescript-eslint/parser": "^8.56.1",
     "@vitejs/plugin-react": "^5.1.1",
-    "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-radar": "^0.10.1"
@@ -55,5 +55,11 @@
     "overrides": {
       "vite": "^7.3.1"
     }
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,css}": [
+      "biome check --write --no-errors-on-unmatched .",
+      "biome lint --error-on-warnings ."
+    ]
   }
 }
