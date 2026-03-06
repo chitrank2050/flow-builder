@@ -16,7 +16,6 @@ export default function SubmitButton() {
     setResult(null);
 
     try {
-      console.log({ nodes, edges })
       const res = await fetch(`${API_BASE}/pipelines/parse`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

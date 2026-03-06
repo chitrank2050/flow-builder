@@ -1,76 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
-/* @import "reactflow/dist/style.css"; */
-@import "@xyflow/react/dist/style.css";
 
-@import "tailwindcss";
+/* Tailwind preflight (reset) — runs first */
+@import "tailwindcss/preflight" layer(base);
 
-/* ─── Design Tokens ──────────────────────────────────── */
-:root {
-  --bg-app: #06080F;
-  --bg-canvas: #080B14;
-  --bg-node: #0D1220;
-  --bg-node-hover: #111827;
-  --bg-field: #07090F;
-  --border-subtle: rgba(255, 255, 255, 0.055);
-  --border-node: rgba(255, 255, 255, 0.09);
-  --border-focus: rgba(255, 255, 255, 0.18);
-  --text-primary: #E2E8F0;
-  --text-secondary: #94A3B8;
-  --text-muted: #475569;
-  --text-dim: #2A3547;
+/* Tailwind theme — generates all --color-*, --shadow-*, etc. CSS variables */
+@import "tailwindcss/theme" layer(theme);
 
-  --blue: #3B82F6;
-  --cyan: #06B6D4;
-  --purple: #8B5CF6;
-  --green: #10B981;
-  --orange: #F59E0B;
-  --pink: #EC4899;
-  --red: #EF4444;
-  --yellow: #EAB308;
-  --slate: #64748B;
+/* ReactFlow — sits on top of the reset, below utilities */
+@import "@xyflow/react/dist/style.css" layer(reactflow);
 
-  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.4);
-  --shadow-node: 0 4px 28px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.7);
-}
-
-/* ─── Reset ──────────────────────────────────────────── */
-/* *,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
+/* Tailwind utilities — highest priority, always wins */
+@import "tailwindcss/utilities";
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--bg-app);
-  color: var(--text-primary);
+  background: var(--color-neutral-950);
+  color: var(--color-neutral-100);
   height: 100vh;
   overflow: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
 /* ─── Node Card ──────────────────────────────────────── */
 .base-node {
-  background: var(--bg-node);
-  border: 1px solid var(--border-node);
+  background: var(--color-neutral-900);
+  border: 1px solid color-mix(in srgb, var(--color-neutral-600) 35%, transparent);
   border-radius: 10px;
-  box-shadow: var(--shadow-node);
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.55);
   position: relative;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   min-width: 220px;
 }
 
 .base-node:hover {
-  border-color: var(--border-focus);
-  box-shadow: var(--shadow-lg), 0 0 0 1px color-mix(in srgb, var(--accent, var(--blue)) 25%, transparent);
+  border-color: color-mix(in srgb, var(--color-neutral-400) 40%, transparent);
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px color-mix(in srgb, var(--accent, var(--color-blue-500)) 25%, transparent);
 }
 
 .selected .base-node {
-  border-color: color-mix(in srgb, var(--accent, var(--blue)) 60%, transparent);
-  box-shadow: var(--shadow-lg), 0 0 0 1px color-mix(in srgb, var(--accent, var(--blue)) 40%, transparent);
+  border-color: color-mix(in srgb, var(--accent, var(--color-blue-500)) 60%, transparent);
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px color-mix(in srgb, var(--accent, var(--color-blue-500)) 40%, transparent);
 }
 
 /* Header */
@@ -79,7 +47,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 9px 14px 9px;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-neutral-700) 25%, transparent);
 }
 
 .node-icon {
@@ -94,7 +62,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--accent, var(--blue));
+  color: var(--accent, var(--color-blue-500));
   flex: 1;
 }
 
@@ -103,8 +71,8 @@ body {
   font-size: 8px;
   padding: 2px 6px;
   border-radius: 3px;
-  background: color-mix(in srgb, var(--accent, var(--blue)) 15%, transparent);
-  color: color-mix(in srgb, var(--accent, var(--blue)) 80%, white);
+  background: color-mix(in srgb, var(--accent, var(--color-blue-500)) 15%, transparent);
+  color: color-mix(in srgb, var(--accent, var(--color-blue-500)) 80%, white);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -129,16 +97,16 @@ body {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--text-muted);
+  color: var(--color-neutral-500);
 }
 
 .field-input,
 .field-select,
 .field-textarea {
-  background: var(--bg-field);
-  border: 1px solid var(--border-subtle);
+  background: var(--color-neutral-950);
+  border: 1px solid color-mix(in srgb, var(--color-neutral-700) 25%, transparent);
   border-radius: 5px;
-  color: var(--text-primary);
+  color: var(--color-neutral-100);
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   padding: 5px 8px;
@@ -150,14 +118,14 @@ body {
 }
 
 .field-input::placeholder {
-  color: var(--text-dim);
+  color: var(--color-neutral-700);
 }
 
 .field-input:focus,
 .field-select:focus,
 .field-textarea:focus {
-  border-color: color-mix(in srgb, var(--accent, var(--blue)) 60%, transparent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent, var(--blue)) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent, var(--color-blue-500)) 60%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent, var(--color-blue-500)) 12%, transparent);
 }
 
 .field-textarea {
@@ -169,15 +137,15 @@ body {
 }
 
 .field-select option {
-  background: #111827;
-  color: var(--text-primary);
+  background: var(--color-neutral-900);
+  color: var(--color-neutral-100);
 }
 
 /* Node info text */
 .node-info {
   padding: 6px 14px 10px;
   font-size: 11px;
-  color: var(--text-muted);
+  color: var(--color-neutral-500);
   line-height: 1.5;
   font-style: italic;
 }
@@ -187,18 +155,18 @@ body {
   width: 10px !important;
   height: 10px !important;
   border-radius: 50% !important;
-  border: 2px solid var(--bg-node) !important;
+  border: 2px solid var(--color-neutral-900) !important;
   transition: transform 0.15s ease, box-shadow 0.15s ease !important;
   z-index: 10 !important;
 }
 
 .react-flow__handle-left {
-  background: var(--cyan) !important;
+  background: var(--color-cyan-500) !important;
   left: -5px !important;
 }
 
 .react-flow__handle-right {
-  background: var(--green) !important;
+  background: var(--color-emerald-500) !important;
   right: -5px !important;
 }
 
@@ -210,7 +178,7 @@ body {
 .handle-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 8px;
-  color: var(--text-muted);
+  color: var(--color-neutral-500);
   position: absolute;
   transform: translateY(-50%);
   white-space: nowrap;
@@ -233,10 +201,10 @@ body {
   left: 0;
   right: 0;
   height: 60px;
-  background: rgba(6, 8, 15, 0.92);
+  background: color-mix(in srgb, var(--color-neutral-950) 92%, transparent);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-neutral-700) 25%, transparent);
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -249,7 +217,7 @@ body {
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.06em;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+  background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-violet-500) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -260,7 +228,7 @@ body {
 .toolbar-sep {
   width: 1px;
   height: 20px;
-  background: var(--border-subtle);
+  background: color-mix(in srgb, var(--color-neutral-700) 25%, transparent);
   margin: 0 8px;
   flex-shrink: 0;
 }
@@ -268,7 +236,7 @@ body {
 .toolbar-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 8.5px;
-  color: var(--text-dim);
+  color: var(--color-neutral-700);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   white-space: nowrap;
@@ -300,7 +268,7 @@ body {
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: var(--text-secondary);
+  color: var(--color-neutral-400);
   background: transparent;
   user-select: none;
   white-space: nowrap;
@@ -308,9 +276,9 @@ body {
 }
 
 .draggable-node:hover {
-  background: rgba(255, 255, 255, 0.045);
-  color: var(--text-primary);
-  border-color: var(--border-node);
+  background: color-mix(in srgb, var(--color-neutral-700) 20%, transparent);
+  color: var(--color-neutral-100);
+  border-color: color-mix(in srgb, var(--color-neutral-600) 35%, transparent);
 }
 
 .draggable-node:active {
@@ -340,10 +308,10 @@ body {
   left: 0;
   right: 0;
   height: 56px;
-  background: rgba(6, 8, 15, 0.92);
+  background: color-mix(in srgb, var(--color-neutral-950) 92%, transparent);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid color-mix(in srgb, var(--color-neutral-700) 25%, transparent);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -354,7 +322,7 @@ body {
 .status-text {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
-  color: var(--text-dim);
+  color: var(--color-neutral-700);
   letter-spacing: 0.08em;
 }
 
@@ -363,23 +331,13 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--green);
+  background: var(--color-emerald-500);
   margin-right: 8px;
-  box-shadow: 0 0 6px var(--green);
-  animation: pulse 2s infinite;
+  box-shadow: 0 0 6px var(--color-emerald-500);
+  animation: var(--animate-pulse);
 }
 
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.4;
-  }
-}
+/* pulse keyframe provided by Tailwind — referenced via var(--animate-pulse) */
 
 .submit-btn {
   display: flex;
@@ -387,9 +345,9 @@ body {
   gap: 8px;
   padding: 7px 20px;
   border-radius: 6px;
-  border: 1px solid rgba(59, 130, 246, 0.35);
-  background: rgba(59, 130, 246, 0.08);
-  color: #93C5FD;
+  border: 1px solid color-mix(in srgb, var(--color-blue-500) 35%, transparent);
+  background: color-mix(in srgb, var(--color-blue-500) 8%, transparent);
+  color: var(--color-blue-300);
   font-family: 'Syne', sans-serif;
   font-size: 11px;
   font-weight: 700;
@@ -400,10 +358,10 @@ body {
 }
 
 .submit-btn:hover {
-  background: rgba(59, 130, 246, 0.16);
-  border-color: rgba(59, 130, 246, 0.6);
-  color: #BFDBFE;
-  box-shadow: 0 0 24px rgba(59, 130, 246, 0.18);
+  background: color-mix(in srgb, var(--color-blue-500) 16%, transparent);
+  border-color: color-mix(in srgb, var(--color-blue-500) 60%, transparent);
+  color: var(--color-blue-200);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--color-blue-500) 18%, transparent);
 }
 
 .submit-btn:active {
@@ -424,69 +382,83 @@ body {
 }
 
 .submit-result.success {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: color-mix(in srgb, var(--color-emerald-500) 12%, transparent);
+  color: var(--color-emerald-400);
+  border: 1px solid color-mix(in srgb, var(--color-emerald-500) 25%, transparent);
 }
 
 .submit-result.error {
-  background: rgba(239, 68, 68, 0.12);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: color-mix(in srgb, var(--color-red-500) 12%, transparent);
+  color: var(--color-red-400);
+  border: 1px solid color-mix(in srgb, var(--color-red-500) 25%, transparent);
 }
 
 /* ─── ReactFlow Overrides ────────────────────────────── */
-.react-flow__background {
-  background: var(--bg-canvas);
+
+/* Strip all built-in node type styling from ReactFlow's reserved types
+   (input, output, default) — these ship with white bg, border, padding, fixed width */
+.react-flow__node,
+.react-flow__node-input,
+.react-flow__node-output,
+.react-flow__node-default {
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: auto;
+  border-radius: 0;
 }
 
-/* .react-flow__controls {
-  background: var(--bg-node) !important;
-  border: 1px solid var(--border-node) !important;
-  border-radius: 8px !important;
+.react-flow__background {
+  background: var(--color-neutral-950);
+}
+
+.react-flow__controls {
+  background: var(--color-neutral-900);
+  border: 1px solid color-mix(in srgb, var(--color-neutral-600) 35%, transparent);
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: var(--shadow-sm) !important;
-} */
+  box-shadow: var(--shadow-sm);
+}
 
 .react-flow__controls-button {
-  background: transparent !important;
-  border: none !important;
-  border-bottom: 1px solid var(--border-subtle) !important;
-  fill: var(--text-muted) !important;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-neutral-700) 25%, transparent);
+  fill: var(--color-neutral-500);
 }
 
 .react-flow__controls-button:hover {
-  background: var(--bg-node-hover) !important;
-  fill: var(--text-primary) !important;
+  background: var(--color-neutral-800);
+  fill: var(--color-neutral-100);
 }
 
 .react-flow__controls-button:last-child {
-  border-bottom: none !important;
+  border-bottom: none;
 }
 
 .react-flow__minimap {
-  background: var(--bg-node) !important;
-  border: 1px solid var(--border-node) !important;
-  border-radius: 8px !important;
+  background: var(--color-neutral-900);
+  border: 1px solid color-mix(in srgb, var(--color-neutral-600) 35%, transparent);
+  border-radius: 8px;
   overflow: hidden;
 }
 
 .react-flow__minimap-mask {
-  fill: rgba(6, 8, 15, 0.6) !important;
+  fill: color-mix(in srgb, var(--color-neutral-950) 60%, transparent);
 }
 
 .react-flow__minimap-node {
-  fill: rgba(255, 255, 255, 0.08) !important;
+  fill: color-mix(in srgb, var(--color-neutral-100) 8%, transparent);
 }
 
 .react-flow__edge-path {
-  stroke: rgba(255, 255, 255, 0.12) !important;
-  stroke-width: 1.5 !important;
+  stroke: color-mix(in srgb, var(--color-neutral-100) 12%, transparent);
+  stroke-width: 1.5;
 }
 
 .react-flow__edge.selected .react-flow__edge-path,
 .react-flow__edge:hover .react-flow__edge-path {
-  stroke: rgba(59, 130, 246, 0.55) !important;
+  stroke: color-mix(in srgb, var(--color-blue-500) 55%, transparent);
 }
 
 .react-flow__edge-textwrapper {
@@ -494,23 +466,23 @@ body {
 }
 
 .react-flow__connection-path {
-  stroke: var(--blue) !important;
-  stroke-width: 1.5 !important;
+  stroke: var(--color-blue-500);
+  stroke-width: 1.5;
   opacity: 0.6;
 }
 
 /* node selection box */
 .react-flow__nodesselection-rect,
 .react-flow__selection {
-  background: rgba(59, 130, 246, 0.04) !important;
-  border: 1px solid rgba(59, 130, 246, 0.3) !important;
-  border-radius: 4px !important;
+  background: color-mix(in srgb, var(--color-blue-500) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-blue-500) 30%, transparent);
+  border-radius: 4px;
 }
 
 /* ─── Note Node special ──────────────────────────────── */
 .note-node {
-  background: rgba(234, 179, 8, 0.04);
-  border: 1px solid rgba(234, 179, 8, 0.15);
+  background: color-mix(in srgb, var(--color-yellow-500) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-yellow-500) 15%, transparent);
   border-radius: 8px;
   padding: 12px;
   min-width: 180px;
@@ -522,7 +494,7 @@ body {
   border: none;
   outline: none;
   resize: none;
-  color: var(--text-secondary);
+  color: var(--color-neutral-400);
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   line-height: 1.6;
@@ -532,19 +504,11 @@ body {
 
 .edge-label-renderer__custom-edge {
   position: absolute;
-  background-color: #0d1220;
-  color: #9f9fa9;
-  padding: 8px;
+  background-color: var(--color-neutral-900);
+  color: var(--color-neutral-400);
+  padding: 4px;
   border-radius: 4px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  box-shadow: var(--shadow-node);
-}
-
-@layer components {
-  .react-flow__controls {
-    @apply rounded-lg overflow-hidden border shadow-sm;
-    background: var(--bg-node);
-    border-color: var(--border-node);
-  }
+  font-size: 8px;
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.55);
 }

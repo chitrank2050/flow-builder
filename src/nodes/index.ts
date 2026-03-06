@@ -10,7 +10,7 @@ import TextNode, { type TextNode as TextNodeType } from './types/TextNode';
 import TransformNode, { type TransformNode as TransformNodeType } from './types/TransformNode';
 
 export interface NODE_MAP {
-  input: InputNodeType
+  enter: InputNodeType
   output: OutputNodeType
   api: ApiNodeType
   llm: LLMNodeType
@@ -35,17 +35,9 @@ export const NODE_CATALOG = [
 
 export type NodeType = typeof NODE_CATALOG[number]['type'];
 
-
-type ExtractNodeData<T> =
-  T extends React.ComponentType<infer P>
-  ? P extends { data: infer D }
-  ? D
-  : never
-  : never;
-
 export const CANVAS_NODE_TYPES: NodeTypes = Object.fromEntries(
   NODE_CATALOG.map(n => [n.type, n.component])
 );
 
-export type PipelineNode =
-  ExtractNodeData<typeof NODE_CATALOG[number]['component']>;
+// Union of all fully-typed ReactFlow Node objects (includes id, type, position, data, …)
+export type PipelineNode = NODE_MAP[keyof NODE_MAP];

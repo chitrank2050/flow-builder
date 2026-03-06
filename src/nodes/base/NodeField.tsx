@@ -82,7 +82,7 @@ export default function NodeField({
         {field.label && <span className="field-label">{field.label}</span>}
         <div
           className="field-input"
-          style={{ color: 'var(--text-muted)', ...style }}
+          style={{ color: 'var(--color-neutral-500)', ...style }}
         >
           {field.value || '—'}
         </div>

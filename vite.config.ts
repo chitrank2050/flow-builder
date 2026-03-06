@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
       react(),
       tailwindcss({
         optimize: {
-          minify: false
+          minify: Boolean(env.PROD)
         }
       }),
       VitePluginRadar({

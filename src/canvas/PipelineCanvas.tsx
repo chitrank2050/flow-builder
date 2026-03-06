@@ -26,7 +26,7 @@ export default function PipelineCanvas() {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
 
   const [rfInstance, setRfInstance] =
-    useState<ReactFlowInstance | null>(null)
+    useState<ReactFlowInstance<PipelineNode> | null>(null)
 
   const store = usePipelineStore(useShallow(STORE_SELECTOR))
 
@@ -73,7 +73,7 @@ export default function PipelineCanvas() {
 
   return (
     <div ref={wrapperRef} className="canvas-wrapper">
-      <ReactFlow
+      <ReactFlow<PipelineNode>
         nodes={store.nodes}
         edges={store.edges}
         onNodesChange={store.onNodesChange}
