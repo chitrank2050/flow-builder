@@ -22,7 +22,7 @@
     "setup": "bash scripts/install.sh",
     "clean-setup": "pnpm run obliviate && pnpm run setup",
     "build": "tsc --noEmit && vite build",
-    "build:full": "bash scripts/build.sh",
+    "clean-build": "pnpm run clean-setup && bash scripts/build.sh",
     "obliviate": "bash scripts/obliviate.sh",
     "prepare": "husky"
   },

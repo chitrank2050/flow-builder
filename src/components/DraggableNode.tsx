@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 type Props = {
   type: string
   label: string
@@ -5,7 +7,7 @@ type Props = {
   icon: string
 }
 
-export const DraggableNode = ({ type, label, color, icon }: Props) => {
+const DraggableNode = ({ type, label, color, icon }: Props) => {
   const onDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
     e.dataTransfer.setData('application/reactflow', JSON.stringify({ nodeType: type }))
     e.dataTransfer.effectAllowed = 'move'
@@ -28,3 +30,5 @@ export const DraggableNode = ({ type, label, color, icon }: Props) => {
     </button>
   )
 }
+
+export default memo(DraggableNode)

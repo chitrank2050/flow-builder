@@ -1,6 +1,6 @@
 // canvas/Toolbar.jsx
 
-import { DraggableNode } from '../components/DraggableNode'
+import DraggableNode from '../components/DraggableNode'
 import { NODE_CATALOG } from '../nodes'
 
 export default function Toolbar() {

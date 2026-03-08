@@ -1,4 +1,5 @@
 import { BaseEdge, EdgeLabelRenderer, getBezierPath, type Position } from '@xyflow/react'
+import { memo } from 'react'
 
 type Props = {
   id: string
@@ -13,7 +14,7 @@ type Props = {
   }
 }
 
-export default function CustomEdgeWithLabel({
+const CustomEdgeWithLabel = ({
   id,
   sourceX,
   sourceY,
@@ -22,7 +23,7 @@ export default function CustomEdgeWithLabel({
   sourcePosition,
   targetPosition,
   data,
-}: Props) {
+}: Props) => {
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
@@ -48,3 +49,5 @@ export default function CustomEdgeWithLabel({
     </>
   )
 }
+
+export default memo(CustomEdgeWithLabel)
